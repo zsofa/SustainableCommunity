@@ -1,3 +1,106 @@
-<p>
-  registration works!
-</p>
+
+<div class="example">
+  <form class="k-form" #form (ngSubmit)= "onSubmit()" >
+    <fieldset class="k-form-fieldset">
+      <legend class="k-form-legend">User Details</legend>
+      <kendo-formfield>
+        <kendo-label [for]="Regusername" text="Username"></kendo-label>
+        <kendo-textbox
+        [(ngModel)]="user.username" name="username"
+          [clearButton]="true"
+          #Regusername="ngModel"
+          required
+          [customAsyncValidator]="checkUserNameIsUnique"
+        ></kendo-textbox>
+
+        <kendo-formerror *ngIf="Regusername.errors?.required">
+          Error: Username is required
+        </kendo-formerror>
+        <kendo-formerror *ngIf="Regusername.errors?.isUserNameUnique">
+          Error: Username is already used
+        </kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="Regpassword" text="Password"></kendo-label>
+        <kendo-textbox
+       [(ngModel)]="user.password" name="password"
+          [clearButton]="true"
+          #Regpassword="ngModel" 
+          #passwordTextbox
+          required
+          (ngModelChange)="RegpassAgain.control.updateValueAndValidity()"
+        >
+        <ng-template kendoTextBoxSuffixTemplate>
+          <button
+            kendoButton
+            look="clear"
+            icon="eye"
+            type="button"
+            (click)="toggleVisibility()"
+          ></button>
+        </ng-template>
+      </kendo-textbox>
+
+
+        <kendo-formerror *ngIf="Regpassword.errors?.required">
+          Error: Password is required
+        </kendo-formerror>
+      
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="RegpassAgain" text="Password again"></kendo-label>
+        <kendo-textbox
+        [(ngModel)]="user.passAgain" name="passAgain"
+          [clearButton]="true"
+          #RegpassAgain="ngModel"
+          #passwordTextbox2
+          required
+          [customValidator]="equalsPassword"
+
+        >
+        <ng-template kendoTextBoxSuffixTemplate>
+          <button
+            kendoButton
+            look="clear"
+            icon="eye"
+            type="button"
+           (click)="toggleVisibilitytoPassAgain()"
+          ></button>
+        </ng-template>
+      </kendo-textbox>
+        <kendo-formerror *ngIf="RegpassAgain.errors?.required">
+          Error: Password is required
+        </kendo-formerror>
+        <kendo-formerror *ngIf="RegpassAgain.errors?.equalsPassword">
+          Error: Passwords are different
+        </kendo-formerror>
+
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="Regemail" text="Email"></kendo-label>
+        <kendo-textbox
+        [(ngModel)]="user.email"  name="email"
+          [clearButton]="true"
+          #Regemail="ngModel"
+          required
+          email="true"
+        ></kendo-textbox>
+
+        <kendo-formerror>Error: Not valid email format</kendo-formerror>
+      </kendo-formfield>
+
+
+
+      <div class="k-form-buttons">
+        <button class="k-button k-primary" type="submit">
+          Submit
+        </button>
+       <!-- <button class="k-button" (click)="clearForm()">Clear</button>-->
+       <button [routerLink] = "['/login']" type="button">back</button>
+      </div>
+    </fieldset>
+  </form>
+</div>

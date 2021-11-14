@@ -16,6 +16,12 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "hu-HU": "src/locale/messages.hu-HU.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -39,6 +45,12 @@
             "scripts": []
           },
           "configurations": {
+          
+            "hu-HU": {
+              "localize": [
+                "hu-HU"
+              ]
+            },
             "production": {
               "budgets": [
                 {
@@ -73,7 +85,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
+          "configurations": {            
+            "hu-HU": {
+              "browserTarget": "WebSustainableCommunity:build:hu-HU"
+            },
             "production": {
               "browserTarget": "WebSustainableCommunity:build:production"
             },
