@@ -30,7 +30,7 @@ public currentUser: User = null;
       }
 
     }
-    alert("Wrong username or password");
+    alert($localize `Wrong username or password`);
     return;
 
   }
@@ -44,7 +44,7 @@ public currentUser: User = null;
   }
 
   public hasLoggedInUser(): boolean {
-    return !!this.currentUser;  // !valami ('!') ha null ha false ha undefinde
+    return !!this.currentUser;  
   }
 
 
@@ -103,7 +103,7 @@ public currentUser: User = null;
       this.users.push( {id: userId, email:email, username: entryName, password: pass, passAgain:passAgain});
 
 
-      alert("Successful registration!")
+      alert($localize `Successful registration!`)
       console.log(this.users.length)
     //  console.log(this.users)
 
