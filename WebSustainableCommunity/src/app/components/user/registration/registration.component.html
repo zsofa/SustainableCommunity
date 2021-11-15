@@ -2,9 +2,9 @@
 <div class="example">
   <form class="k-form" #form (ngSubmit)= "onSubmit()" >
     <fieldset class="k-form-fieldset">
-      <legend class="k-form-legend">User Details</legend>
+      <legend class="k-form-legend" i18n>User Details</legend>
       <kendo-formfield>
-        <kendo-label [for]="Regusername" text="Username"></kendo-label>
+        <kendo-label [for]="Regusername" text="Username" i18n-text></kendo-label>
         <kendo-textbox
         [(ngModel)]="user.username" name="username"
           [clearButton]="true"
@@ -13,16 +13,16 @@
           [customAsyncValidator]="checkUserNameIsUnique"
         ></kendo-textbox>
 
-        <kendo-formerror *ngIf="Regusername.errors?.required">
+        <kendo-formerror *ngIf="Regusername.errors?.required" i18n>
           Error: Username is required
         </kendo-formerror>
-        <kendo-formerror *ngIf="Regusername.errors?.isUserNameUnique">
+        <kendo-formerror *ngIf="Regusername.errors?.isUserNameUnique" i18n>
           Error: Username is already used
         </kendo-formerror>
       </kendo-formfield>
 
       <kendo-formfield>
-        <kendo-label [for]="Regpassword" text="Password"></kendo-label>
+        <kendo-label [for]="Regpassword" text="Password" i18n-text></kendo-label>
         <kendo-textbox
        [(ngModel)]="user.password" name="password"
           [clearButton]="true"
@@ -43,19 +43,19 @@
       </kendo-textbox>
 
 
-        <kendo-formerror *ngIf="Regpassword.errors?.required">
+        <kendo-formerror *ngIf="Regpassword.errors?.required" i18n>
           Error: Password is required
         </kendo-formerror>
       
       </kendo-formfield>
 
       <kendo-formfield>
-        <kendo-label [for]="RegpassAgain" text="Password again"></kendo-label>
+        <kendo-label [for]="RegpassAgain" text="Password again" i18n-text></kendo-label>
         <kendo-textbox
         [(ngModel)]="user.passAgain" name="passAgain"
           [clearButton]="true"
           #RegpassAgain="ngModel"
-          #passwordTextbox2
+          #passwordTextboxagain
           required
           [customValidator]="equalsPassword"
 
@@ -70,10 +70,10 @@
           ></button>
         </ng-template>
       </kendo-textbox>
-        <kendo-formerror *ngIf="RegpassAgain.errors?.required">
+        <kendo-formerror *ngIf="RegpassAgain.errors?.required" i18n>
           Error: Password is required
         </kendo-formerror>
-        <kendo-formerror *ngIf="RegpassAgain.errors?.equalsPassword">
+        <kendo-formerror *ngIf="RegpassAgain.errors?.equalsPassword" i18n>
           Error: Passwords are different
         </kendo-formerror>
 
@@ -89,13 +89,13 @@
           email="true"
         ></kendo-textbox>
 
-        <kendo-formerror>Error: Not valid email format</kendo-formerror>
+        <kendo-formerror i18n>Error: Not valid email format</kendo-formerror>
       </kendo-formfield>
 
 
 
       <div class="k-form-buttons">
-        <button class="k-button k-primary" type="submit">
+        <button class="k-button k-primary" type="submit" i18n>
           Submit
         </button>
        <!-- <button class="k-button" (click)="clearForm()">Clear</button>-->

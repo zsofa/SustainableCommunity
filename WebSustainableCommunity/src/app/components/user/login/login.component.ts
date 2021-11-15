@@ -34,13 +34,12 @@ public toggleVisibility(): void {
 public form: FormGroup = new FormGroup({
   username: new FormControl(),
   password: new FormControl(),
-  
   loggedin: new FormControl(),
 });
 
 public login(): void {
   this.form.markAllAsTouched();
-  //  alert($localize `This must be translated`);   ez kell a typscripten belüli fordításhoz a ' $localize  '
+  //  alert($localize `This must be translated`);   ez kell a typscripten belüli fordításhoz a ' $localize  '!!!
 }
 
 public clearForm(): void {

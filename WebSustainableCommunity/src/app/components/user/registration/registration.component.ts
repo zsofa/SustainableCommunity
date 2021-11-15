@@ -40,21 +40,21 @@ export class RegistrationComponent implements OnInit {
     this.form.reset();
   }
 
-  @ViewChild("passwordTextbox") public textbox: TextBoxComponent;
-  @ViewChild("passwordTextbox2") public textbox2: TextBoxComponent;
+  @ViewChild("passwordTextbox") public passwordTextbox: TextBoxComponent;
+  @ViewChild("passwordTextboxagain") public passwordAgainTextbox: TextBoxComponent;
 
   public ngAfterViewInit(): void {
-    this.textbox.input.nativeElement.type = "password";
-    this.textbox2.input.nativeElement.type = "password";
+    this.passwordTextbox.input.nativeElement.type = "password";
+    this.passwordAgainTextbox.input.nativeElement.type = "password";
   }
 
   public toggleVisibility(): void {
-    const inputEl = this.textbox.input.nativeElement;
+    const inputEl = this.passwordTextbox.input.nativeElement;
     inputEl.type = inputEl.type === "password" ? "text" : "password";
   }
 
   public toggleVisibilitytoPassAgain(): void {
-    const inputEl = this.textbox2.input.nativeElement;
+    const inputEl = this.passwordAgainTextbox.input.nativeElement;
     inputEl.type = inputEl.type === "password" ? "text" : "password";
   }
 
@@ -66,16 +66,11 @@ export class RegistrationComponent implements OnInit {
     }
     this.userApiService.register(this.user).subscribe(value => {
       console.log(value);
-      alert("Success");
+      alert("Success"); // ez csak tesztelésre, majd szedd ki
     });
   }
 
 
-  checkUserNameIsUnique2 = (control: AbstractControl) => {
-    return Promise.resolve({
-      isUserNameUnique: true
-    })
-  }
   checkUserNameIsUnique = (control: AbstractControl) => {
     let user = this.form.value as User;
     return this.userApiService.isUserNameUnique(control.value).pipe(
@@ -91,38 +86,6 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
-  checkUserNameIsUnique3 = (password: string, passwordRepeat: string): AsyncValidatorFn => {
-    // [customAsyncValidator]="checkUserNameIsUnique3(form.value.password, form.value.passAgain)"
-    return (control) => {
-      return this.userApiService.isUserNameUnique(password).pipe(
-        map((isUserNameUnique) => {
-          if (isUserNameUnique) {
-            return null;
-          } else {
-            return {
-              isUserNameUnique: true
-            }
-          }
-        })
-      )
-    }
-  }
-
-  equalsPassAgain: ValidatorFn = (control: AbstractControl) => {
-    let password = control.value;
-    let passAgain = this.user.passAgain;
-//control.markAsTouched()
-    if (passAgain === password) {
-      return null;
-    } else {
-      return {
-        equalsPassAgain: true
-      }
-    }
-
-
-  }
-//  equalsPassword = (control: AbstractControl): any => {
   equalsPassword:ValidatorFn = (control: AbstractControl) => {
     let password = this.user.password;
     let passAgain = control.value;
