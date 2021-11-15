@@ -28,9 +28,11 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").permitAll();
         
-              /*    .antMatchers("/", "/home", "/register").permitAll()
+              /*
+                .antMatchers("/", "/home", "/register").permitAll()
               .antMatchers("/users").hasAuthority("jog1")
-                .antMatchers("/admin").hasAuthority("jog2");*/
+                .antMatchers("/admin").hasAuthority("jog2");
+                */
 
 
     }
