@@ -1,5 +1,6 @@
 package Progmatic.SustainableCommunity.models;
 
+import Progmatic.SustainableCommunity.forms.ItemForm;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,14 +24,20 @@ public class Item {
     private ItemCondition itemCondition;
     private Integer itemValue;
     private Integer borrowPrice;
-    private boolean isAvailable;
-    @CreationTimestamp
-    private LocalDateTime upload;
+    @Column(length = 1200)
+    private String description;
     @Column(nullable = false)
+    /**
+     * Height, Width: cm-ben adja meg a User.
+     */
     private Double itemHeight;
     @Column(nullable = false)
     private Double itemWidth;
-    // need owner
+    private boolean isAvailable;
+    @CreationTimestamp
+    private LocalDateTime upload;
+    @ManyToOne
+    private AppUser owner;
 
 
     public Item() {
@@ -46,5 +53,26 @@ public class Item {
         this.itemCondition = itemCondition;
         this.itemValue = itemValue;
         this.borrowPrice = borrowPrice;
+    }
+
+    public Item(ItemForm itemForm){
+        this(itemForm.getItemName(),
+                itemForm.getItemCategory(),
+                itemForm.getItemCondition(),
+                itemForm.getItemValue(),
+                itemForm.getBorrowPrice(),
+                itemForm.getDescription(),
+                itemForm.getItemHeight(),
+                itemForm.getItemWidth());
+    }
+
+    public Item(String itemName,
+                ItemCategory itemCategory,
+                ItemCondition itemCondition,
+                Integer itemValue,
+                Integer borrowPrice,
+                String description,
+                Double itemHeight,
+                Double itemWidth) {
     }
 }
