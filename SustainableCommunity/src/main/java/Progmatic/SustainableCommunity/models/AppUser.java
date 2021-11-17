@@ -1,8 +1,6 @@
 package Progmatic.SustainableCommunity.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +20,7 @@ public class AppUser implements UserDetails {
 
     @Column(length = 100, unique = true)
     private String username; //email
-
+    private String email;
     private String password;
 
     @CreationTimestamp
