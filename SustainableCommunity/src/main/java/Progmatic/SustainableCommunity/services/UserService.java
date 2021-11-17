@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//!! Át kellett castolni valamiért , hiba!!
+//!!! Át kellett castolni valamiért , hiba!!
         return (UserDetails) em.createQuery("SELECT user FROM AppUser user WHERE user.username = :name", AppUser.class) // kell a model
                 .setParameter("name", username)
                 .getSingleResult();
