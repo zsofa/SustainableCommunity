@@ -37,6 +37,5 @@ public class ItemService {
     private Double spaceSaved(Item item) {
         return item.getItemHeight() * item.getItemWidth() / 100;
     }
-
 }
 
