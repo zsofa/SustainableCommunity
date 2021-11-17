@@ -1,3 +1,68 @@
-<p>
-  login works!
-</p>
+<!-- <h1 i18n>Login</h1> -->
+
+<div class="example">
+  <form class="k-form">
+    <fieldset class="k-form-fieldset">
+      <kendo-formfield>
+        <kendo-label [for]="txtUsername" text="Username" i18n-text></kendo-label>
+        <kendo-textbox
+          name="username"
+          [(ngModel)]="username"
+          [clearButton]="true"
+          #txtUsername
+          required
+        ></kendo-textbox>
+
+        <kendo-formerror i18n>Error: Username is required</kendo-formerror>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label [for]="txtPassword" text="Password" i18n-text> </kendo-label>
+        <kendo-textbox
+          name="password"
+          [(ngModel)]="password"
+          #txtPassword
+          #loginPassword
+          required
+          [clearButton]="true"
+        >
+          < <ng-template kendoTextBoxSuffixTemplate>
+            <button
+              kendoButton
+              look="clear"
+              icon="eye"
+              (click)="toggleVisibility()"
+            ></button>
+          </ng-template> 
+        </kendo-textbox>
+
+        <kendo-formerror i18n>Error: Password is required</kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <div class="k-checkbox-wrap">
+          <input
+            name="loggedin"
+            [(ngModel)]="loggedin"
+            #ckLoggedin
+            type="checkbox"
+            kendoCheckBox
+          />
+          <kendo-label
+            [for]="ckLoggedin"
+            class="k-checkbox-label"
+            text="Keep me logged in" i18n-text
+          ></kendo-label>
+        </div>
+        <kendo-formhint i18n>Next time, you will be logged in automatically</kendo-formhint
+        >
+      </kendo-formfield>
+
+      <div class="k-form-buttons">
+        <button class="k-button k-primary" (click)="login()" i18n>Login</button>
+       <!-- <button class="k-button" (click)="clearForm()">Clear</button> -->
+        <button class="k-button" type="button" routerLink="/registration" i18n>Registration</button>
+
+      </div>
+    </fieldset>
+  </form>
+</div>
