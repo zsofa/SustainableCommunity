@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-/*
+
     @Autowired
     UserService userService;
+/*
 
     @PostMapping(path = "user/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegUser> create(@RequestBody final RegUser newRegUser) {
-        userService.save(newRegUser);
+        userService.save(newRegUser);       //userService.register()
         return new ResponseEntity<>(newRegUser, HttpStatus.CREATED);
     }
 
@@ -35,7 +36,8 @@ public class UserController {
         }
         return true;
     }
+*/
 
-    */
+
 
 }
