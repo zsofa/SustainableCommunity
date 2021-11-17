@@ -16,8 +16,27 @@ public class ItemService {
         this.itemRepo = itemRepo;
     }
 
-    private void uploadItem(ItemForm item){
+    private void uploadItem(ItemForm item) {
         Item saveItem = new Item(item);
         itemRepo.save(saveItem);
     }
+
+    /**
+     * Egy adott tárgy kölcsönzésekor mennyit lehet vele spórolni.
+     * 1 napra vonatkozóan.
+     */
+    private Integer moneySaved(Item item) {
+        return item.getItemValue() - item.getBorrowPrice();
+    }
+
+    /**
+     * Egy adott tárgy kölcsönzésekor mekkora helyet lehet vele spórolni.
+     * cm-ben megadva, metódus átválja méterre, hogy nm-ert kapjunk.
+     */
+
+    private Double spaceSaved(Item item) {
+        return item.getItemHeight() * item.getItemWidth() / 100;
+    }
+
 }
+

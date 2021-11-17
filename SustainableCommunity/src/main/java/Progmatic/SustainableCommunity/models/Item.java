@@ -27,14 +27,17 @@ public class Item {
     @Column(length = 1200)
     private String description;
     @Column(nullable = false)
+    /**
+     * Height, Width: cm-ben adja meg a User.
+     */
     private Double itemHeight;
     @Column(nullable = false)
     private Double itemWidth;
     private boolean isAvailable;
     @CreationTimestamp
     private LocalDateTime upload;
-    //@ManyToOne
-    //private AppUser owner;
+    @ManyToOne
+    private AppUser owner;
 
 
     public Item() {
