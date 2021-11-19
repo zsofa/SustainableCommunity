@@ -25,7 +25,7 @@ public class ItemService {
      * Egy adott tárgy kölcsönzésekor mennyit lehet vele spórolni.
      * 1 napra vonatkozóan.
      */
-    private Integer moneySaved(Item item) {
+    public Integer moneySaved(Item item) {
         return item.getItemValue() - item.getBorrowPrice();
     }
 
@@ -34,7 +34,7 @@ public class ItemService {
      * cm-ben megadva, metódus átválja méterre, hogy nm-ert kapjunk.
      */
 
-    private Double spaceSaved(Item item) {
+    public Double spaceSaved(Item item) {
         return item.getItemHeight() * item.getItemWidth() / 100;
     }
 
