@@ -37,5 +37,14 @@ public class ItemService {
     private Double spaceSaved(Item item) {
         return item.getItemHeight() * item.getItemWidth() / 100;
     }
+
+    /**
+     * changeItemPrice (Item)
+     * Admin jogosultság, kikeresi az Itemet id alapján, átállítja az isApprovalt
+     */
+
+    private void approveItem(Item toBeApproved, Integer price){
+        itemRepo.findById(toBeApproved.getItemId());
+    }
 }
 
