@@ -49,7 +49,7 @@ public currentUser: User = null;
 
 
 
-  getUserNameById(userid: number): string {   // getUserById volt az eredeti neve
+  getUserNameById(userid: number): string {   
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].id === userid) {
         return this.users[i].username;
@@ -72,7 +72,7 @@ public currentUser: User = null;
   UsedNameChecker(name: string) {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].username === name) {
-        alert("This name is allready in use")
+        alert($localize `This name is allready in use`)
         return false;
       }
     }
@@ -82,7 +82,7 @@ public currentUser: User = null;
   samePassword(pass1: string,pass2: string) {
     for (let i = 0; i < this.users.length; i++) {
       if (pass1 !== pass2) {
-        alert("The passwords are not the same")
+        alert($localize `The passwords are not the same`)
         return false;
       }
     }
