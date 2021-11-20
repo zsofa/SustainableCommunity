@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -23,10 +25,6 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AppUser> create(@RequestBody final AppUser newRegUser) {
-/*
-       userService.register(newRegUser);
-        return new ResponseEntity<>(newRegUser, HttpStatus.CREATED);*/
-
 
         boolean success= userService.register(newRegUser);   //userService.save(newRegUser);
         if(success){
@@ -47,17 +45,10 @@ public class UserController {
         return true;
     }
 
-/*
-
-    @GetMapping("user/isUsernameUnique")
-    public boolean isUsernameUnique(String name) {
-
-            return userService.isUsernameUsed(name);
-
+    @GetMapping("/users")
+    public List<AppUser> getAllUsers() {
+        return userService.getAll();
     }
-*/
-
-
 
 
 }
