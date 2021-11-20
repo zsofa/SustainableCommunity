@@ -21,17 +21,18 @@ public currentUser: User = null;
 
 
   login(name: string, pass: string) {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].username === name && this.users[i].password === pass) {
-        this.currentUser = this.users[i];
-        console.log(this.currentUser);
-        this.router.navigateByUrl("/productList");
-        return;
-      }
+    // for (let i = 0; i < this.users.length; i++) {
+    //   if (this.users[i].username === name && this.users[i].password === pass) {
+    //     this.currentUser = this.users[i];
+    //     console.log(this.currentUser);
+    //     this.router.navigateByUrl("/home");
+    //     return;
+    //   }
 
-    }
-    alert($localize `Wrong username or password`);
-    return;
+    // }
+    this.currentUser = new User();
+   // alert($localize `Wrong username or password`);
+    //return;
 
   }
 
