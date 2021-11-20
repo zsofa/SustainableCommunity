@@ -26,7 +26,8 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/**").permitAll()
+                .antMatchers("user/create").permitAll();
         
 /*
                 .antMatchers(
@@ -43,6 +44,8 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/edit_self").hasAuthority("CUSTOMER", "SELLER", "ADMIN")
                 .antMatchers("/edit_all").hasAuthority("ADMIN")
                 .antMatchers("/rating").hasAuthority("ADMIN","SELLER", "CUSTOMER");*/
+
+
 
 
 

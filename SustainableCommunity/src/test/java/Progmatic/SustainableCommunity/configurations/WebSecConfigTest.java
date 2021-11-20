@@ -17,10 +17,10 @@ class WebSecConfigTest {
     @Autowired
     MockMvc mockMvc;
 
-    @WithMockUser("ADMIN")
+    @WithMockUser("GUEST")
     @Test
     void getInformationAboutUsers() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(
+        mockMvc.perform(MockMvcRequestBuilders.get("user/create")).andExpect(
                 MockMvcResultMatchers.status().isOk()).andReturn();
     }
 

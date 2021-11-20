@@ -14,7 +14,7 @@ import java.util.List;
 
 @TestConfiguration
 public class TestConfig {
-
+/*
     @Bean
     @Primary
     public UserDetailsService userDetailsService() { // ezek teszt userek
@@ -25,5 +25,5 @@ public class TestConfig {
         return new InMemoryUserDetailsManager(list);
 
 
-    }
+    }*/
 }
