@@ -17,14 +17,14 @@ class UserControllerTest {
     
     @Test
     void getUserNameUnique() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("user/isUsernameUnique"))
-                .andExpect(MockMvcResultMatchers.status().isOk()); //lehet más jobb a 200-nál
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/isUsernameUnique"))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn(); //lehet más jobb a 200-nál
     }
 
     @Test
     void createUserTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("user/create"))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/create"))
+                .andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
     }
 
 
