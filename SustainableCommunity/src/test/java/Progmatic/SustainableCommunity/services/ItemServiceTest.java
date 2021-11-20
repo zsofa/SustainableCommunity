@@ -14,14 +14,16 @@ class ItemServiceTest {
     @Autowired
     ItemService itemService;
 
+    Item test = new Item();
+
+
     @AfterEach
     void tearDown() {
     }
 
 
     @Test
-    void moneySaved() {
-        Item test = new Item();
+    void moneySavedTest() {
         test.setBorrowPrice(500);
         test.setItemValue(35000);
 
@@ -29,7 +31,10 @@ class ItemServiceTest {
     }
 
     @Test
-    void spaceSaved() {
+    void spaceSavedTest() {
+        test.setItemHeight(5.0);
+        test.setItemWidth(2.0);
 
+        assertEquals(0.1,itemService.spaceSaved(test));
     }
 }
