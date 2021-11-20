@@ -18,9 +18,11 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(length = 100, unique = true)
+    @Column(length = 100, unique = true, nullable = false)
     private String username; //email
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     @CreationTimestamp
@@ -43,16 +45,25 @@ public class AppUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+        /*
+          List<SimpleGrantedAuthority> list = new ArrayList<>();
+
+        for (UserAuth auth : authority.AUTHS) {
+            list.add(new SimpleGrantedAuthority(auth.toString()));
+        }
+
+        return list;
+        * */
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
