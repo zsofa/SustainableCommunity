@@ -26,13 +26,27 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/**").permitAll()
+                .antMatchers("user/create").permitAll();
         
-              /*
-                .antMatchers("/", "/home", "/register").permitAll()
-              .antMatchers("/users").hasAuthority("jog1")
-                .antMatchers("/admin").hasAuthority("jog2");
-                */
+/*
+                .antMatchers(
+                            "/home",
+                            "/register",
+                            "/login",
+                            "/share",
+                            "/read_item_information").permitAll()
+                .antMatchers("/users").hasAuthority("ADMIN")
+                .antMatchers("/reserve_item", "/read_contact_information").hasAuthority("ADMIN", "CUSTOMER")
+                .antMatchers("/upload_item").hasAuthority("SELLER", "ADMIN")
+                .antMatchers("/delete_self").hasAuthority("CUSTOMER", "SELLER", "ADMIN")
+                .antMatchers("/delete_all").hasAuthority("ADMIN")
+                .antMatchers("/edit_self").hasAuthority("CUSTOMER", "SELLER", "ADMIN")
+                .antMatchers("/edit_all").hasAuthority("ADMIN")
+                .antMatchers("/rating").hasAuthority("ADMIN","SELLER", "CUSTOMER");*/
+
+
+
 
 
     }

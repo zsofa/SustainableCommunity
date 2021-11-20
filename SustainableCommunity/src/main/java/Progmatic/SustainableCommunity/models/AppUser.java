@@ -30,28 +30,21 @@ public class AppUser implements UserDetails {
     private String firstName;
     private String lastName;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public AppUser() {}
+    public AppUser() {
 
-    public AppUser(Long userId, String username, String email, String password, LocalDateTime regTime, String firstName, String lastName, UserRole userRole) {
-        this.userId = userId;
+    this.userRole = UserRole.CUSTOMER;
+    }
+
+    public AppUser(String username, String email, String password) {
+        this();
         this.username = username;
         this.email = email;
         this.password = password;
-        this.regTime = regTime;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userRole = userRole;
     }
 
-        public AppUser(String username, String email, String password, UserRole userRole) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.userRole = userRole;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
