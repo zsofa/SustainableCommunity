@@ -1,0 +1,53 @@
+package Progmatic.SustainableCommunity.forms;
+
+import Progmatic.SustainableCommunity.models.Item;
+import Progmatic.SustainableCommunity.models.ItemCategory;
+import Progmatic.SustainableCommunity.models.ItemCondition;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ItemForm {
+
+    private String itemName;
+    private ItemCategory itemCategory;
+    private ItemCondition itemCondition;
+    private Integer itemValue;
+    private Integer borrowPrice;
+    private String description;
+    private Double itemHeight;
+    private Double itemWidth;
+
+    public ItemForm() {
+    }
+
+    public ItemForm(String itemName,
+                    ItemCategory itemCategory,
+                    ItemCondition itemCondition,
+                    Integer itemValue,
+                    Integer borrowPrice,
+                    String description,
+                    Double itemHeight,
+                    Double itemWidth) {
+        this.itemName = itemName;
+        this.itemCategory = itemCategory;
+        this.itemCondition = itemCondition;
+        this.itemValue = itemValue;
+        this.borrowPrice = borrowPrice;
+        this.description = description;
+        this.itemHeight = itemHeight;
+        this.itemWidth = itemWidth;
+    }
+
+    public ItemForm(Item item){
+        this(item.getItemName(),
+                item.getItemCategory(),
+                item.getItemCondition(),
+                item.getItemValue(),
+                item.getBorrowPrice(),
+                item.getDescription(),
+                item.getItemHeight(),
+                item.getItemWidth());
+    }
+}
