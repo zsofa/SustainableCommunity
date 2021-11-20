@@ -1,5 +1,6 @@
 package Progmatic.SustainableCommunity.controllers;
 
+import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,23 @@ public class UserController {
 
     @Autowired
     UserService userService;
-/*
+
 
     @PostMapping(path = "user/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RegUser> create(@RequestBody final RegUser newRegUser) {
-        userService.save(newRegUser);       //userService.register()
+    public ResponseEntity<AppUser> create(@RequestBody final AppUser newRegUser) {
+/*
+       userService.register(newRegUser);
+        return new ResponseEntity<>(newRegUser, HttpStatus.CREATED);*/
+
+
+        boolean success= userService.register(newRegUser);   //userService.save(newRegUser);
+        if(success){
         return new ResponseEntity<>(newRegUser, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(newRegUser,HttpStatus.BAD_REQUEST);
+
     }
 
 
@@ -36,7 +46,17 @@ public class UserController {
         }
         return true;
     }
+
+/*
+
+    @GetMapping("user/isUsernameUnique")
+    public boolean isUsernameUnique(String name) {
+
+            return userService.isUsernameUsed(name);
+
+    }
 */
+
 
 
 
