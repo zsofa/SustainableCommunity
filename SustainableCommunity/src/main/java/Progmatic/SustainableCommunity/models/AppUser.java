@@ -18,9 +18,11 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(length = 100, unique = true)
+    @Column(length = 100, unique = true, nullable = false)
     private String username; //email
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     @CreationTimestamp
@@ -28,23 +30,44 @@ public class AppUser implements UserDetails {
     private String firstName;
     private String lastName;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    public AppUser() {
+
+    this.userRole = UserRole.CUSTOMER;
+    }
+
+    public AppUser(String username, String email, String password) {
+        this();
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+        /*
+          List<SimpleGrantedAuthority> list = new ArrayList<>();
+
+        for (UserAuth auth : authority.AUTHS) {
+            list.add(new SimpleGrantedAuthority(auth.toString()));
+        }
+
+        return list;
+        * */
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
