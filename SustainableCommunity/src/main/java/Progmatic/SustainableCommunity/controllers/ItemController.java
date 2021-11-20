@@ -1,4 +1,6 @@
 package Progmatic.SustainableCommunity.controllers;
 
-public class ItemControl {
+public class ItemController {
+
+
 }
