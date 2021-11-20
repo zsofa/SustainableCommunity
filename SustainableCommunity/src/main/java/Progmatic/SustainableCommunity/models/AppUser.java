@@ -34,6 +34,7 @@ public class AppUser implements UserDetails {
     private UserRole userRole;
 
     public AppUser() {
+
     this.userRole = UserRole.CUSTOMER;
     }
 
@@ -43,6 +44,7 @@ public class AppUser implements UserDetails {
         this.email = email;
         this.password = password;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

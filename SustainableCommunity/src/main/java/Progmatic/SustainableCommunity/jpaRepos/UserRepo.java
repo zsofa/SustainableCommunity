@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepo extends JpaRepository<AppUser, Long> {
-    // TODO a String helyett majd a "jó" User class-t kell használni!
+
+    AppUser findAppUserByEmail(String email);
 
 }

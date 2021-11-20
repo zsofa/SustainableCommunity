@@ -25,7 +25,7 @@ public class ItemService {
      * Egy adott tárgy kölcsönzésekor mennyit lehet vele spórolni.
      * 1 napra vonatkozóan.
      */
-    private Integer moneySaved(Item item) {
+    public Integer moneySaved(Item item) {
         return item.getItemValue() - item.getBorrowPrice();
     }
 
