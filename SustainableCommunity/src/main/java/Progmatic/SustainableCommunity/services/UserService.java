@@ -34,14 +34,16 @@ public class UserService implements UserDetailsService {
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
+
     private UserRepo userRepo;
+
 
     private PasswordEncoder encoder;
 
     @Autowired
-    public UserService(PasswordEncoder encoder) {
+    public UserService(PasswordEncoder encoder, UserRepo userRepo) {
         this.encoder = encoder;
+        this.userRepo = userRepo;
     }
 
 
