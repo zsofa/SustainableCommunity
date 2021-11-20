@@ -33,7 +33,8 @@ public class Item {
     private Double itemHeight;
     @Column(nullable = false)
     private Double itemWidth;
-    private boolean isAvailable;
+    private Boolean isAvailable;
+    private Boolean isApproved;
     @CreationTimestamp
     private LocalDateTime upload;
     @ManyToOne
