@@ -29,8 +29,6 @@ public class UserService implements UserDetailsService {
             "[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*" +
             "[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
-
-
     @PersistenceContext
     private EntityManager em;
 
@@ -45,41 +43,21 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public List<AppUser> getAll() {
+        return userRepo.findAll();
+    }
+
+    public AppUser save(AppUser newRegUser) {
+        return userRepo.save(newRegUser);
+    }
+
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return em.createQuery("SELECT user FROM AppUser user WHERE user.username = :name", AppUser.class) // kell a model
                 .setParameter("name", username)
                 .getSingleResult();
-
     }
-
-/*
-
-    @Transactional
-    public List<User> findAllUsers() {
-        return em.createQuery("SELECT user FROM User user", User.class)
-                .getResultList();
-    }
-*/
-
-
-    // username benne van az adatbázis
-
-/*
-
-    public User register(User newUser) {
-        for(int i = 0; i < findAllUsers().size();i++){
-            if(newUser.getUsername().equals(findAllUsers().get(i).getUsername())){
-                return null;
-            }
-        }
-        newUser.setPassword(encoder.encode(newUser.getPassword()));
-        return userRepo.save(newUser);
-    }
-
-*/
-
 
     @Transactional
     public AppUser loadUserByEmail(String email) throws EmailNotFoundException {
@@ -87,21 +65,7 @@ public class UserService implements UserDetailsService {
         return em.createQuery("SELECT user FROM AppUser user WHERE user.email = :email", AppUser.class) // kell a model
                 .setParameter("email", email)
                 .getSingleResult();
-
     }
-
-
-
-// +++
-    public List<AppUser> getAll() {
-        return userRepo.findAll();
-    }
-//++++
-    public AppUser save(AppUser newRegUser) {
-        return userRepo.save(newRegUser);
-    }
-
-
 
     @Transactional
     public boolean isUsernameUsed(String username) {
@@ -112,7 +76,6 @@ public class UserService implements UserDetailsService {
 
         }
         return false;
-
     }
 
     @Transactional
@@ -124,7 +87,6 @@ public class UserService implements UserDetailsService {
 
         }
         return false;
-
     }
 
     @Transactional
@@ -134,17 +96,12 @@ public class UserService implements UserDetailsService {
                 user.setPassword(encoder.encode(user.getPassword()));
                 userRepo.save(user);
                 return true;
-
             }
-
-
         } catch (Exception e) {
 
         }
-
         return false;
     }
-
 
     public AppUser getLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -155,7 +112,6 @@ public class UserService implements UserDetailsService {
                 return (AppUser) principal;
             }
         }
-
         return null;
     }
 
@@ -164,8 +120,6 @@ public class UserService implements UserDetailsService {
         return Pattern.compile(pattern)
                 .matcher(email)
                 .matches();
-
     }
-
 
 }
