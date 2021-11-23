@@ -37,6 +37,8 @@ public class Item {
     private byte[] itemImage;
     private Boolean isAvailable;
     private Boolean isApproved;
+    @Enumerated
+    private ItemStatus itemStatus;
     @CreationTimestamp
     private LocalDateTime upload;
     @ManyToOne
