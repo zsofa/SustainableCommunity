@@ -27,7 +27,7 @@ class ItemServiceTest {
         test.setBorrowPrice(500);
         test.setItemValue(35000);
 
-      //  assertEquals(34500, itemService.moneySaved(test));
+      assertEquals(34500, itemService.moneySaved(test));
     }
 
     @Test

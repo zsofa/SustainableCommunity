@@ -33,6 +33,8 @@ public class Item {
     private Double itemHeight;
     @Column(nullable = false)
     private Double itemWidth;
+    @Lob
+    private byte[] itemImage;
     private Boolean isAvailable;
     private Boolean isApproved;
     @CreationTimestamp
@@ -64,7 +66,8 @@ public class Item {
                 itemForm.getBorrowPrice(),
                 itemForm.getDescription(),
                 itemForm.getItemHeight(),
-                itemForm.getItemWidth());
+                itemForm.getItemWidth(),
+                itemForm.getItemImage());
     }
 
     public Item(String itemName,
@@ -74,6 +77,7 @@ public class Item {
                 Integer borrowPrice,
                 String description,
                 Double itemHeight,
-                Double itemWidth) {
+                Double itemWidth,
+                byte[] itemImage) {
     }
 }
