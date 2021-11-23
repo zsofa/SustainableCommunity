@@ -41,9 +41,9 @@ public class Item {
     private ItemStatus itemStatus;
     @CreationTimestamp
     private LocalDateTime upload;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private AppUser owner;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private AppUser charterer;
     private Integer rateCounter = 0;
     private Double ratings;
