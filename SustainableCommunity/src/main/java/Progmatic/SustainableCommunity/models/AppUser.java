@@ -50,10 +50,17 @@ public class AppUser implements UserDetails {
         this.password = password;
     }
 
+    // for testing, will be deleted -> test admin added
+    public AppUser(String username, String email, String password, UserRole userRole) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.userRole = userRole;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return userRole.getAuths();
         /*
           List<SimpleGrantedAuthority> list = new ArrayList<>();
 
@@ -77,21 +84,21 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

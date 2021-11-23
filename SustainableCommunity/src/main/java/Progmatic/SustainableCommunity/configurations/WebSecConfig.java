@@ -1,6 +1,8 @@
 package Progmatic.SustainableCommunity.configurations;
 
+import Progmatic.SustainableCommunity.models.UserAuthorities;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +28,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
                 .antMatchers("user/create").permitAll();
         

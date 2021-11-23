@@ -43,6 +43,7 @@ public class ItemService {
     }
 
     /**
+     *
      * changeItemPrice (Item)
      * Admin jogosultság, kikeresi az Itemet id alapján, átállítja az isApprovalt.
      */
