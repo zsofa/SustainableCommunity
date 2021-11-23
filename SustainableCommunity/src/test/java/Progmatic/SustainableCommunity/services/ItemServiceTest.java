@@ -37,4 +37,12 @@ class ItemServiceTest {
 
         assertEquals(0.1,itemService.spaceSaved(test));
     }
+
+    @Test
+    void getItemRateTest(){
+        test.setRateCounter(3);
+        test.setRatings(6.00);
+
+        assertEquals(1.75,itemService.getItemRate(1.00,test));
+    }
 }

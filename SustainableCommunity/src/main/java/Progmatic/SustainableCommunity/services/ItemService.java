@@ -2,6 +2,7 @@ package Progmatic.SustainableCommunity.services;
 
 import Progmatic.SustainableCommunity.forms.ItemForm;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
+import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,19 @@ public class ItemService {
 
     private Optional<List<Item>> approveItemList() {
         return itemRepo.findAllByIsApprovedFalse();
+    }
+
+    /**
+     * Kiszámolja az Item ratingjét.
+     * @param rating
+     * @param item
+     * @return
+     */
+    public Double getItemRate(Double rating, Item item){
+        Double rate = item.getRatings() + rating;
+        item.setRatings(rate);
+        item.setRateCounter(item.getRateCounter()+1);
+        return item.getRatings()/item.getRateCounter();
     }
 }
 

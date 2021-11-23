@@ -26,7 +26,4 @@ class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("user/create"))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
-
-
-
 }

@@ -4,9 +4,9 @@ import Progmatic.SustainableCommunity.forms.ItemForm;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -37,13 +37,16 @@ public class Item {
     private byte[] itemImage;
     private Boolean isAvailable;
     private Boolean isApproved;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
     @CreationTimestamp
     private LocalDateTime upload;
     @ManyToOne
     private AppUser owner;
-
+    @ManyToOne
+    private AppUser charterer;
+    private Integer rateCounter = 0;
+    private Double ratings;
 
     public Item() {
     }

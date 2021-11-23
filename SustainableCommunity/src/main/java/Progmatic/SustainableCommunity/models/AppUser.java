@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -32,6 +33,10 @@ public class AppUser implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @OneToMany(mappedBy="owner")
+    private List<Item> uploadItems;
+    @OneToMany(mappedBy="charterer")
+    private List<Item> rentedItems;
 
     public AppUser() {
 
