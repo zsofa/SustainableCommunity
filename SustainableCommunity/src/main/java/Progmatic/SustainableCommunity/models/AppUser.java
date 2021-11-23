@@ -45,7 +45,7 @@ public class AppUser implements UserDetails {
         this.password = password;
     }
 
-    // for testing, will be deleted
+    // for testing, will be deleted -> test admin added
     public AppUser(String username, String email, String password, UserRole userRole) {
         this.username = username;
         this.email = email;
