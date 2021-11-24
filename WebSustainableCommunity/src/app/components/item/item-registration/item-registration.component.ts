@@ -19,6 +19,7 @@ export class ItemRegistrationComponent implements OnInit {
   public item: Item = new Item();
   public Category = Category;
   public Condition = Condition;
+  public  format = "0.00 cm";
 
   @ViewChild("form") form: NgForm;
 
@@ -32,14 +33,18 @@ export class ItemRegistrationComponent implements OnInit {
     });
   }
     //ez itt jelenleg nem müxik
-  public defaultItem: { text: string; value: number } = {
+    //  ezzel próbálkoztam html oldalon  [defaultItem]="defaultItem"
+  public defaultItem:{
     text: "Select item...",
     value: null,
+
+  //  placeholder = "Select..."
+
   };
 
 
   
-public  format = "0.00 cm";
+
 
   
   // public test(clickevent){
