@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterModule, RouterStateS
 import { Observable } from 'rxjs';
 import { HomeComponent } from './components/home/home.component';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
+import { ItemRegistrationComponent } from './components/item/item-registration/item-registration.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { UserService } from './services/User.service';
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
  // {path: '**', redirectTo: '/home', pathMatch:'full'},
   {path: 'home', component: HomeComponent},
-  {path: 'item-details/:id', component: ItemDetailsComponent}
+  {path: 'item-details/:id', component: ItemDetailsComponent},
+  {path: 'item-registration', component: ItemRegistrationComponent}
 ];
 
 @NgModule({
