@@ -3,7 +3,10 @@ package Progmatic.SustainableCommunity.services;
 import Progmatic.SustainableCommunity.exceptions.EmailNotFoundException;
 import Progmatic.SustainableCommunity.jpaRepos.UserRepo;
 import Progmatic.SustainableCommunity.models.AppUser;
+import Progmatic.SustainableCommunity.registration.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -64,7 +67,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-
     public List<AppUser> getAll() {
         return userRepo.findAll();
     }
@@ -99,7 +101,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    @Transactional
+/*    @Transactional
     public boolean register(AppUser user) {
         try {
             if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())){
@@ -113,6 +115,12 @@ public class UserService implements UserDetailsService {
         } catch (Exception e) {
 
         }
+
+        return false;
+    }*/
+
+    public boolean register(RegistrationRequest user) {
+
 
         return false;
     }
@@ -138,6 +146,7 @@ public class UserService implements UserDetailsService {
                 .matches();
 
     }
+
 
 
 }
