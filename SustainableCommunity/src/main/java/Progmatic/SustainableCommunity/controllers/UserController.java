@@ -46,12 +46,6 @@ public class UserController {
 
     }
 
-    @GetMapping(path = "confirm")
-    public boolean confirm(@RequestParam("token") String token) {
-
-        return userService.confirmToken(token);
-
-}
 
     @GetMapping("user/isUsernameUnique")
     public boolean isUsernameUnique(String name) {
