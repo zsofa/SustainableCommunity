@@ -37,7 +37,10 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
-                .antMatchers("user/create").permitAll();
+                .antMatchers("user/create").permitAll()
+                // a homepage-n és regen kívül minden oldalhoz autentikáció kell jelenleg
+                .anyRequest()
+                .authenticated();
         
 /*
                 .antMatchers(
@@ -60,7 +63,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
 
     }
-    @Override
+   @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
