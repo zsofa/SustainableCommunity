@@ -209,7 +209,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public String confirmToken(String token) {
+    public boolean confirmToken(String token) {
         ConfirmationToken confirmationToken = confService
                 .getToken(token)
                 .orElseThrow(() ->
@@ -228,7 +228,7 @@ public class UserService implements UserDetailsService {
         confService.setConfirmedAt(token);
         enableAppUser(
                 confirmationToken.getAppUser().getEmail());
-        return "confirmed";
+        return true;
     }
 
     public int enableAppUser(String email) {
