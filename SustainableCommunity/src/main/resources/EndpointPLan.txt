@@ -1,0 +1,23 @@
+1. /home
+        - permitAll
+2. /registration
+        - permitAll
+3. /login
+        - permitAll
+4. /reserve_item
+        - customer, admin
+5. /upload_item
+        - seller, admin
+6. /read_item_information
+        - permitAll
+7. /delete_self_account / edit..
+        - customer, seller
+8. /delete_all_acc. / edit..
+        - admin
+9. /rating
+        - admin, customer, seller - CUSTOMERT IS LEHESSEN RATINGELNI?
+10. /read_contact_info
+        - admin, customer
+
+11. /share (third party app)
+        - permitAll

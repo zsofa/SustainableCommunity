@@ -49,6 +49,12 @@
             "hu-HU": {
               "localize": [
                 "hu-HU"
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hu.ts"
+                }
               ]
             },
             "production": {
@@ -85,9 +91,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "move-safe:build",
+            "proxyConfig": "proxy.config.json",
+            "port": 4200
+          },
           "configurations": {            
             "hu-HU": {
-              "browserTarget": "WebSustainableCommunity:build:hu-HU"
+              "browserTarget": "WebSustainableCommunity:build:hu-HU",
+              "port": 4201
             },
             "production": {
               "browserTarget": "WebSustainableCommunity:build:production"

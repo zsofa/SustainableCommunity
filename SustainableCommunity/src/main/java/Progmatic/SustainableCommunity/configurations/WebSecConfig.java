@@ -1,6 +1,8 @@
 package Progmatic.SustainableCommunity.configurations;
 
+import Progmatic.SustainableCommunity.models.UserAuthorities;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,13 +28,28 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
+                .antMatchers("/**").permitAll()
+                .antMatchers("user/create").permitAll();
         
-              /*
-                .antMatchers("/", "/home", "/register").permitAll()
-              .antMatchers("/users").hasAuthority("jog1")
-                .antMatchers("/admin").hasAuthority("jog2");
-                */
+/*
+                .antMatchers(
+                            "/home",
+                            "/register",
+                            "/login",
+                            "/share",
+                            "/read_item_information").permitAll()
+                .antMatchers("/users").hasAuthority("ADMIN")
+                .antMatchers("/reserve_item", "/read_contact_information").hasAuthority("ADMIN", "CUSTOMER")
+                .antMatchers("/upload_item").hasAuthority("SELLER", "ADMIN")
+                .antMatchers("/delete_self").hasAuthority("CUSTOMER", "SELLER", "ADMIN")
+                .antMatchers("/delete_all").hasAuthority("ADMIN")
+                .antMatchers("/edit_self").hasAuthority("CUSTOMER", "SELLER", "ADMIN")
+                .antMatchers("/edit_all").hasAuthority("ADMIN")
+                .antMatchers("/rating").hasAuthority("ADMIN","SELLER", "CUSTOMER");*/
+
+
+
 
 
     }
