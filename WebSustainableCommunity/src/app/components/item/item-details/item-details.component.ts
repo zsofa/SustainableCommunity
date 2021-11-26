@@ -18,13 +18,13 @@ export class ItemDetailsComponent implements OnInit {
   ) { }
 
 
-  public currentProduct: Item | undefined;
+  public currentItem: Item | undefined;
 
   ngOnInit() {
     const routeParams = this.route.snapshot.paramMap;
     const productIdFromRoute = Number(routeParams.get('id'));
 
-   this.currentProduct = this.itemService.getProductById(productIdFromRoute);
+   this.currentItem = this.itemService.getProductById(productIdFromRoute);
 
   }
 

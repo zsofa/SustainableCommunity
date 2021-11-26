@@ -44,6 +44,8 @@ public class AppUser implements UserDetails {
             orphanRemoval = true)
     private List<Item> rentedItems = new ArrayList<>();
 
+    private boolean enabled = false;
+    private boolean locked = false;
     public AppUser() {
 
     this.userRole = UserRole.CUSTOMER;
@@ -95,7 +97,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -105,6 +107,6 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
