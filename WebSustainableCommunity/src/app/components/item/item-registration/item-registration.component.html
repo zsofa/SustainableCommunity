@@ -28,6 +28,9 @@
       required
     >
     </kendo-dropdownlist>
+    <kendo-formerror *ngIf="Description.errors?.required" i18n>
+      Error: Category is required
+    </kendo-formerror>
 
       </kendo-formfield>
 
@@ -42,24 +45,10 @@
       required
     >
     </kendo-dropdownlist>
-
+    <kendo-formerror *ngIf="Description.errors?.required" i18n>
+      Error: Condition is required
+    </kendo-formerror>
       </kendo-formfield>
-
-
- 
-    
-<!--         
-    <kendo-numerictextbox
-      [format]="formatOptions"
-      [value]="value"
-      [min]="0"
-    ></kendo-numerictextbox>
-        
-         -->
-
-
-
-
 
       <kendo-formfield>
         <kendo-label [for]="itemHeight" text="Height" i18n-text></kendo-label>
@@ -98,10 +87,11 @@
         </kendo-formerror>
 
       </kendo-formfield>
-
+<!--class = "description-textbox"-->
       <kendo-formfield>
         <kendo-label [for]="Description" text="Description" i18n-text></kendo-label>
         <kendo-textbox
+        
         [(ngModel)]="item.description" name="description"
           #Description="ngModel"
           required
