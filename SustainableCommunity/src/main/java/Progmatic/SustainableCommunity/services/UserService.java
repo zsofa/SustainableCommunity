@@ -151,10 +151,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Item> getItemRatingList(Long id) {
-        return em.createQuery("SELECT item FROM Item item WHERE item.owner =:id", Item.class)
-                .getResultList();
-    }
     @Transactional
     public boolean register(RegistrationRequest user) {
         // todo: handle exceptions
@@ -207,9 +203,14 @@ public class UserService implements UserDetailsService {
         return userRepo.enableAppUser(email);
     }
 
+    public List<Item> getItemRatingList(Long id) {
+        return em.createQuery("SELECT item FROM Item item WHERE item.owner.userId =:id", Item.class)
+                .setParameter("id",id)
+                .getResultList();
+    }
 
     public Double getUserRating(List<Item> itemsByUserId) {
-        Double userRating = null;
+        Double userRating = 0.0;
         for (Item item : itemsByUserId) {
             userRating += item.getItemRating();
         }
