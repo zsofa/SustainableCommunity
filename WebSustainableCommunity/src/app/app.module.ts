@@ -23,6 +23,9 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
  import {CustomValidatorDirective} from "./directives/custom-validator.directive";
 import { HomeComponent } from './components/home/home.component';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
+import { ItemRegistrationComponent } from './components/item/item-registration/item-registration.component';
+import { EnumDropdownDirective } from './directives/enum-dropdown.directive';
+import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { ItemDetailsComponent } from './components/item/item-details/item-detail
     CustomValidatorDirective,
     HomeComponent,
     ItemDetailsComponent,
+    ItemRegistrationComponent,
+    EnumDropdownDirective,
+    EnumLabelComponent,
   ],
   imports: [
     BrowserModule,
