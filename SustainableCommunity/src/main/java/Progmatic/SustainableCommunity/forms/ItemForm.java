@@ -18,6 +18,7 @@ public class ItemForm {
     private String description;
     private Double itemHeight;
     private Double itemWidth;
+    private byte[] itemImage;
 
     public ItemForm() {
     }
@@ -29,7 +30,8 @@ public class ItemForm {
                     Integer borrowPrice,
                     String description,
                     Double itemHeight,
-                    Double itemWidth) {
+                    Double itemWidth,
+                    byte[] itemImage) {
         this.itemName = itemName;
         this.itemCategory = itemCategory;
         this.itemCondition = itemCondition;
@@ -38,6 +40,7 @@ public class ItemForm {
         this.description = description;
         this.itemHeight = itemHeight;
         this.itemWidth = itemWidth;
+        this.itemImage = itemImage;
     }
 
     public ItemForm(Item item){
@@ -48,6 +51,7 @@ public class ItemForm {
                 item.getBorrowPrice(),
                 item.getDescription(),
                 item.getItemHeight(),
-                item.getItemWidth());
+                item.getItemWidth(),
+                item.getItemImage());
     }
 }

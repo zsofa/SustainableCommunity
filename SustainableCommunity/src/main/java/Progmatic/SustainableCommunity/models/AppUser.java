@@ -36,7 +36,11 @@ public class AppUser implements UserDetails {
     public AppUser() {
     }
 
-
+    public AppUser(String username, String email, UserRole userRole) {
+        this.username = username;
+        this.email = email;
+        this.userRole = userRole;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

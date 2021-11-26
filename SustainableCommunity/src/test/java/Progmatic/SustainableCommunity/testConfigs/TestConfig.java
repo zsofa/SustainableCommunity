@@ -13,7 +13,5 @@ public class TestConfig {
         list.add(new AppUser("usertwo", "passwordtwo", UserRole.ADMIN));
 
         return new InMemoryUserDetailsManager(list);
-
-
     }*/
 }

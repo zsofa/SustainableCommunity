@@ -21,6 +21,11 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
  import {HttpClientModule} from "@angular/common/http";
  import {CustomAsyncValidatorDirective} from "./directives/custom-async-validator.directive";
  import {CustomValidatorDirective} from "./directives/custom-validator.directive";
+import { HomeComponent } from './components/home/home.component';
+import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
+import { ItemRegistrationComponent } from './components/item/item-registration/item-registration.component';
+import { EnumDropdownDirective } from './directives/enum-dropdown.directive';
+import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +36,11 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
     RegistrationComponent,
     CustomAsyncValidatorDirective,
     CustomValidatorDirective,
+    HomeComponent,
+    ItemDetailsComponent,
+    ItemRegistrationComponent,
+    EnumDropdownDirective,
+    EnumLabelComponent,
   ],
   imports: [
     BrowserModule,

@@ -56,33 +56,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-/*
-
-    @Transactional
-    public List<User> findAllUsers() {
-        return em.createQuery("SELECT user FROM User user", User.class)
-                .getResultList();
-    }
-*/
-
-
-    // username benne van az adatbázis
-
-/*
-
-    public User register(User newUser) {
-        for(int i = 0; i < findAllUsers().size();i++){
-            if(newUser.getUsername().equals(findAllUsers().get(i).getUsername())){
-                return null;
-            }
-        }
-        newUser.setPassword(encoder.encode(newUser.getPassword()));
-        return userRepo.save(newUser);
-    }
-
-*/
-
-
     @Transactional
     public AppUser loadUserByEmail(String email) throws EmailNotFoundException {
 
@@ -94,11 +67,10 @@ public class UserService implements UserDetailsService {
 
 
 
-// +++
     public List<AppUser> getAll() {
         return userRepo.findAll();
     }
-//++++
+
     public AppUser save(AppUser newRegUser) {
         return userRepo.save(newRegUser);
     }

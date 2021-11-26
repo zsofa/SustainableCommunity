@@ -1,16 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Nemkacat!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<div>
-  <H1 class="header-img">SustainableCommunity</H1>
-</div>
-<!-- <nav id="toCartNav" *ngIf="userService.loggedin">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" *ngIf="userService.loggedin" (click)="logOut()">Log out</a>
 
-  <div> -->
-   <!-- <button routerLink="/cart" *ngIf="userService.isUserCustomer()">Cart</button>
-    <button routerLink="/orderList" *ngIf="userService.isUserCartManager()">OrderList</button>
-    <button routerLink="/userList" *ngIf="userService.isUserAdmin()">UserList</button> -->
-    <!-- <button routerLink="/login" (click)="logOut()">Log out</button>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/login" *ngIf="!userService.loggedin">Login</a>
+
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/registration" *ngIf="!userService.loggedin">Registration</a>
+
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
+</nav>
 
-</nav> -->
+
+
 
 <router-outlet></router-outlet>
