@@ -1,6 +1,6 @@
 package Progmatic.SustainableCommunity.services;
 
-import Progmatic.SustainableCommunity.email.EmailBuilder;
+//import Progmatic.SustainableCommunity.email.EmailBuilder;
 import Progmatic.SustainableCommunity.email.EmailSender;
 import Progmatic.SustainableCommunity.exceptions.EmailNotFoundException;
 import Progmatic.SustainableCommunity.jpaRepos.UserRepo;
@@ -26,6 +26,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,8 +45,8 @@ public class UserService implements UserDetailsService {
 
     private PasswordEncoder encoder;
 
-    private EmailSender emailSender;
-    private EmailBuilder builder;
+    //private EmailSender emailSender;
+    //private EmailBuilder builder;
 
 
     @Transactional
@@ -56,6 +57,14 @@ public class UserService implements UserDetailsService {
                 .getSingleResult();
 
     }
+
+    public AppUser getUser(long id) {
+        return userRepo.findById(id).orElse(null);
+
+    }
+
+
+
 
     @Transactional
     public AppUser loadUserByEmail(String email) throws EmailNotFoundException {
@@ -184,7 +193,7 @@ public class UserService implements UserDetailsService {
                 confService.saveConfirmationToken(confToken);
 
                String link ="http://localhost:8080/confirm?token=" + token;
-                emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
+           //     emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
                 return true;
 
             }

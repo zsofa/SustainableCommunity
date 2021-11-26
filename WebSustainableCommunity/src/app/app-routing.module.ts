@@ -1,6 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterModule, RouterStateSnapshot, Routes, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ItemReviewComponent } from './components/admin/item-review/item-review.component';
 import { HomeComponent } from './components/home/home.component';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 import { ItemRegistrationComponent } from './components/item/item-registration/item-registration.component';
@@ -36,7 +37,9 @@ const routes: Routes = [
  // {path: '**', redirectTo: '/home', pathMatch:'full'},
   {path: 'home', component: HomeComponent},
   {path: 'item-details/:id', component: ItemDetailsComponent},
-  {path: 'item-registration', component: ItemRegistrationComponent}
+  {path: 'item-registration', component: ItemRegistrationComponent},
+  {path: 'item-review', component: ItemReviewComponent}
+  
 ];
 
 @NgModule({
