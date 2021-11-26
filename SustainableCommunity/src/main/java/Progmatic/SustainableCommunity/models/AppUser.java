@@ -33,6 +33,7 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+
     public AppUser() {
 
     this.userRole = UserRole.CUSTOMER;

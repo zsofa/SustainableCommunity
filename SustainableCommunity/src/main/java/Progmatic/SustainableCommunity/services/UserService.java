@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +54,14 @@ public class UserService implements UserDetailsService {
                 .getSingleResult();
 
     }
+
+    public AppUser getUser(long id) {
+        return userRepo.findById(id).orElse(null);
+
+    }
+
+
+
 
     @Transactional
     public AppUser loadUserByEmail(String email) throws EmailNotFoundException {

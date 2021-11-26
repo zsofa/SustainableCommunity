@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -16,18 +17,25 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Bean
+    public JWTAuthorizationFilter jwtAuthenticationFilter() {
+        return new JWTAuthorizationFilter();
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .formLogin()
-                .and()
-                .logout()
-                .and()
+                .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("user/create").permitAll();
+                //.antMatchers("/**").permitAll()
+                .antMatchers("/user/create").permitAll()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated();
+
+
+
         
 /*
                 .antMatchers(
