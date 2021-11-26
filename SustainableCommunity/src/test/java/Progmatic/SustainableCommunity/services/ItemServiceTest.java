@@ -16,7 +16,6 @@ class ItemServiceTest {
 
     Item test = new Item();
 
-
     @AfterEach
     void tearDown() {
     }
@@ -27,7 +26,7 @@ class ItemServiceTest {
         test.setBorrowPrice(500);
         test.setItemValue(35000);
 
-      //  assertEquals(34500, itemService.moneySaved(test));
+      assertEquals(34500, itemService.moneySaved(test));
     }
 
     @Test
@@ -36,5 +35,13 @@ class ItemServiceTest {
         test.setItemWidth(2.0);
 
         assertEquals(0.1,itemService.spaceSaved(test));
+    }
+
+    @Test
+    void getItemRateTest(){
+        test.setRateCounter(3);
+        test.setRatings(6.00);
+
+        assertEquals(1.75,itemService.getItemRate(1.00,test));
     }
 }

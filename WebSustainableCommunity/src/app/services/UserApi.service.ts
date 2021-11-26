@@ -22,4 +22,8 @@ public isUserNameUnique(user:string): Observable<boolean>{
   return this.http.get<boolean>(environment.serverBaseHref + "/user/isUsernameUnique", {params: {name: user}})
 }
 
+public getUsers(){
+  return this.http.get(environment.serverBaseHref + "/users",)
+}
+
 }

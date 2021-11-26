@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -29,11 +31,21 @@ public class AppUser implements UserDetails {
     private LocalDateTime regTime;
     private String firstName;
     private String lastName;
+    private Double userRating;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @OneToMany(mappedBy="owner",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Item> uploadItems = new ArrayList<>();
+    @OneToMany(mappedBy="charterer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Item> rentedItems = new ArrayList<>();
 
-
+    private boolean enabled = false;
+    private boolean locked = false;
     public AppUser() {
 
     this.userRole = UserRole.CUSTOMER;
@@ -46,10 +58,17 @@ public class AppUser implements UserDetails {
         this.password = password;
     }
 
+    // for testing, will be deleted -> test admin added
+    public AppUser(String username, String email, String password, UserRole userRole) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.userRole = userRole;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return userRole.getAuths();
         /*
           List<SimpleGrantedAuthority> list = new ArrayList<>();
 
@@ -73,21 +92,21 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return !locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 }

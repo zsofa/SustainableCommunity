@@ -44,6 +44,7 @@ public class ItemService {
     }
 
     /**
+     *
      * changeItemPrice (Item)
      * Admin jogosultság, kikeresi az Itemet id alapján, átállítja az isApprovalt.
      */
@@ -64,6 +65,20 @@ public class ItemService {
 
     private Optional<List<Item>> approveItemList() {
         return itemRepo.findAllByIsApprovedFalse();
+    }
+
+    /**
+     * Kiszámolja az Item ratingjét.
+     * @param rating
+     * @param item
+     * @return
+     */
+    public Double getItemRate(Double rating, Item item){
+        Double rate = item.getRatings() + rating;
+        item.setRatings(rate);
+        item.setRateCounter(item.getRateCounter()+1);
+        item.setItemRating(item.getRatings()/item.getRateCounter());
+        return item.getItemRating();
     }
 }
 

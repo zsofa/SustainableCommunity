@@ -26,6 +26,7 @@ import { ItemDetailsComponent } from './components/item/item-details/item-detail
 import { ItemRegistrationComponent } from './components/item/item-registration/item-registration.component';
 import { EnumDropdownDirective } from './directives/enum-dropdown.directive';
 import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.component';
+import { ItemReviewComponent } from './components/admin/item-review/item-review.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.c
     ItemRegistrationComponent,
     EnumDropdownDirective,
     EnumLabelComponent,
+    ItemReviewComponent
   ],
   imports: [
     BrowserModule,
