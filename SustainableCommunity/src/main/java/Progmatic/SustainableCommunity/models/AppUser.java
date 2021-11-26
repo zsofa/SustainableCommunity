@@ -31,6 +31,7 @@ public class AppUser implements UserDetails {
     private LocalDateTime regTime;
     private String firstName;
     private String lastName;
+    private Double userRating;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

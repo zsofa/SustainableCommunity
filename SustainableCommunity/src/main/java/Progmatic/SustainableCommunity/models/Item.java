@@ -47,9 +47,11 @@ public class Item {
     private AppUser charterer;
     private Integer rateCounter = 0;
     private Double ratings;
+    private Double itemRating;
 
     public Item() {
     }
+
 
     public Item(String itemName,
                 ItemCategory itemCategory,

@@ -2,7 +2,6 @@ package Progmatic.SustainableCommunity.services;
 
 import Progmatic.SustainableCommunity.forms.ItemForm;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
-import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,7 +75,8 @@ public class ItemService {
         Double rate = item.getRatings() + rating;
         item.setRatings(rate);
         item.setRateCounter(item.getRateCounter()+1);
-        return item.getRatings()/item.getRateCounter();
+        item.setItemRating(item.getRatings()/item.getRateCounter());
+        return item.getItemRating();
     }
 }
 

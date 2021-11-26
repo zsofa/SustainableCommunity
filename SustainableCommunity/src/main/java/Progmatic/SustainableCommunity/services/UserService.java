@@ -3,10 +3,10 @@ package Progmatic.SustainableCommunity.services;
 import Progmatic.SustainableCommunity.exceptions.EmailNotFoundException;
 import Progmatic.SustainableCommunity.jpaRepos.UserRepo;
 import Progmatic.SustainableCommunity.models.AppUser;
+import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +17,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
@@ -28,7 +27,6 @@ public class UserService implements UserDetailsService {
             "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|" +
             "[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*" +
             "[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-
 
 
     @PersistenceContext
@@ -64,7 +62,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-
     public List<AppUser> getAll() {
         return userRepo.findAll();
     }
@@ -72,7 +69,6 @@ public class UserService implements UserDetailsService {
     public AppUser save(AppUser newRegUser) {
         return userRepo.save(newRegUser);
     }
-
 
 
     @Transactional
@@ -102,7 +98,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public boolean register(AppUser user) {
         try {
-            if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())){
+            if (!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())) {
                 user.setPassword(encoder.encode(user.getPassword()));
                 userRepo.save(user);
                 return true;
@@ -139,5 +135,16 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public List<Item> getItemRatingList(Long id) {
+        return em.createQuery("SELECT item FROM Item item WHERE item.owner =:id", Item.class)
+                .getResultList();
+    }
 
+    public Double getUserRating(List<Item> itemsByUserId) {
+        Double userRating = null;
+        for (Item item : itemsByUserId) {
+            userRating += item.getItemRating();
+        }
+        return userRating;
+    }
 }
