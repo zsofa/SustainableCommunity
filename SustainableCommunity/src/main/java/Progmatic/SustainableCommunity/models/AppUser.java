@@ -35,17 +35,21 @@ public class AppUser implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
     @OneToMany(mappedBy="owner",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Item> uploadItems = new ArrayList<>();
+
     @OneToMany(mappedBy="charterer",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Item> rentedItems = new ArrayList<>();
 
     private boolean enabled = false;
+
     private boolean locked = false;
+
     public AppUser() {
 
     this.userRole = UserRole.CUSTOMER;

@@ -2,14 +2,13 @@ package Progmatic.SustainableCommunity.controllers;
 
 import Progmatic.SustainableCommunity.forms.ItemForm;
 import Progmatic.SustainableCommunity.models.Item;
+import Progmatic.SustainableCommunity.models.ItemCategory;
 import Progmatic.SustainableCommunity.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ItemController {
@@ -25,6 +24,16 @@ public class ItemController {
 
 
     }
+
+    @GetMapping("item/{ItemCategory}/{id}")
+    public ResponseEntity<Item> getOneItem(@PathVariable  ItemCategory itemCategory,Long id) {
+        return new ResponseEntity<>(new Item(), HttpStatus.OK);
+    }
+
+    // TODO post -> reserve item in ItemService
+
+
+    //@PostMapping("user/")
 
 
 }

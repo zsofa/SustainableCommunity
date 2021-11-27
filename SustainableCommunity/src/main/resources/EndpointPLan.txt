@@ -1,23 +1,32 @@
-1. /home
+1. /home - PIPA
         - permitAll
-2. /registration
+2. /registration - PIPA
         - permitAll
-3. /login
+3. /login - PIPA
         - permitAll
 4. /reserve_item
         - customer, admin
-5. /upload_item
+
+5. /upload_item - PIPA
         - seller, admin
-6. /read_item_information
+
+6. /read_item_information - same as item/category/id
         - permitAll
+
 7. /delete_self_account / edit..
         - customer, seller
-8. /delete_all_acc. / edit..
+8. /delete_any_acc. / edit..
         - admin
-9. /rating
-        - admin, customer, seller - CUSTOMERT IS LEHESSEN RATINGELNI?
-10. /read_contact_info
+9. /rating_customer
+        - admin, seller
+10./rating_seller
         - admin, customer
 
-11. /share (third party app)
+11. /read_contact_info
+        - admin, customer
+12./item_arrived_back
+        - seller
+
+
+13. /share (third party app)
         - permitAll
