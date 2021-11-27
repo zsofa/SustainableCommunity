@@ -1,10 +1,11 @@
 package Progmatic.SustainableCommunity.services;
 
-import Progmatic.SustainableCommunity.email.EmailBuilder;
+//import Progmatic.SustainableCommunity.email.EmailBuilder;
 import Progmatic.SustainableCommunity.email.EmailSender;
 import Progmatic.SustainableCommunity.exceptions.EmailNotFoundException;
 import Progmatic.SustainableCommunity.jpaRepos.UserRepo;
 import Progmatic.SustainableCommunity.models.AppUser;
+import Progmatic.SustainableCommunity.models.Item;
 import Progmatic.SustainableCommunity.registration.RegistrationRequest;
 import Progmatic.SustainableCommunity.registration.token.ConfirmationToken;
 import Progmatic.SustainableCommunity.registration.token.ConfirmationTokenService;
@@ -14,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +26,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +34,7 @@ import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
+
 
     @PersistenceContext
     private EntityManager em;
@@ -43,8 +45,8 @@ public class UserService implements UserDetailsService {
 
     private PasswordEncoder encoder;
 
-    private EmailSender emailSender;
-    private EmailBuilder builder;
+    //private EmailSender emailSender;
+    //private EmailBuilder builder;
 
 
     @Transactional
@@ -55,6 +57,14 @@ public class UserService implements UserDetailsService {
                 .getSingleResult();
 
     }
+
+    public AppUser getUser(long id) {
+        return userRepo.findById(id).orElse(null);
+
+    }
+
+
+
 
     @Transactional
     public AppUser loadUserByEmail(String email) throws EmailNotFoundException {
@@ -73,7 +83,6 @@ public class UserService implements UserDetailsService {
     public AppUser save(AppUser newRegUser) {
         return userRepo.save(newRegUser);
     }
-
 
 
     @Transactional
@@ -105,7 +114,11 @@ public class UserService implements UserDetailsService {
         // todo: handle exceptions
         boolean isValidEmail = emailValidator(user.getEmail());
         try {
+<<<<<<< HEAD
+            if (!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())) {
+=======
             if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail()) && isValidEmail){
+>>>>>>> remotes/origin/developer
                 user.setPassword(encoder.encode(user.getPassword()));
                 userRepo.save(user);
                 return true;
@@ -147,6 +160,10 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public List<Item> getItemRatingList(Long id) {
+        return em.createQuery("SELECT item FROM Item item WHERE item.owner =:id", Item.class)
+                .getResultList();
+    }
     @Transactional
     public boolean register(RegistrationRequest user) {
         // todo: handle exceptions
@@ -180,7 +197,7 @@ public class UserService implements UserDetailsService {
                 confService.saveConfirmationToken(confToken);
 
                String link ="http://localhost:8080/confirm?token=" + token;
-                emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
+           //     emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
                 return true;
 
             }
@@ -200,4 +217,11 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public Double getUserRating(List<Item> itemsByUserId) {
+        Double userRating = null;
+        for (Item item : itemsByUserId) {
+            userRating += item.getItemRating();
+        }
+        return userRating;
+    }
 }

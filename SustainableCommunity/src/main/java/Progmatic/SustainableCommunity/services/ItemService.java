@@ -2,11 +2,11 @@ package Progmatic.SustainableCommunity.services;
 
 import Progmatic.SustainableCommunity.forms.ItemForm;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
-import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +20,8 @@ public class ItemService {
         this.itemRepo = itemRepo;
     }
 
-    private void uploadItem(ItemForm item) {
+    @Transactional
+    public void uploadItem(ItemForm item) { // bemeneti par ItemFrom *
         Item saveItem = new Item(item);
         itemRepo.save(saveItem);
     }
@@ -76,7 +77,8 @@ public class ItemService {
         Double rate = item.getRatings() + rating;
         item.setRatings(rate);
         item.setRateCounter(item.getRateCounter()+1);
-        return item.getRatings()/item.getRateCounter();
+        item.setItemRating(item.getRatings()/item.getRateCounter());
+        return item.getItemRating();
     }
 }
 
