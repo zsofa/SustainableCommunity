@@ -1,4 +1,4 @@
-/*
+
 package Progmatic.SustainableCommunity.email;
 
 import org.springframework.stereotype.Component;
@@ -75,4 +75,4 @@ public class EmailBuilder {
                 "</div></div>";
     }
 }
-*/
+
