@@ -220,9 +220,14 @@ public class UserService implements UserDetailsService {
 
     public Double getUserRating(List<Item> itemsByUserId) {
         Double userRating = 0.0;
+        double counter = 0.0;
+
         for (Item item : itemsByUserId) {
-            userRating += item.getItemRating();
+            if(item.getItemRating() != 0.0) {
+                counter++;
+                userRating += item.getItemRating();
+            }
         }
-        return userRating;
+        return (userRating/counter);
     }
 }
