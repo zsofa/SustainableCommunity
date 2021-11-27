@@ -1,6 +1,7 @@
 package Progmatic.SustainableCommunity.services;
 
 //import Progmatic.SustainableCommunity.email.EmailBuilder;
+import Progmatic.SustainableCommunity.email.EmailBuilder;
 import Progmatic.SustainableCommunity.email.EmailSender;
 import Progmatic.SustainableCommunity.exceptions.EmailNotFoundException;
 import Progmatic.SustainableCommunity.jpaRepos.UserRepo;
@@ -45,8 +46,8 @@ public class UserService implements UserDetailsService {
 
     private PasswordEncoder encoder;
 
-    //private EmailSender emailSender;
-    //private EmailBuilder builder;
+    private EmailSender emailSender;
+    private EmailBuilder builder;
 
 
     @Transactional
@@ -108,30 +109,6 @@ public class UserService implements UserDetailsService {
         return false;
 
     }
-
-  /*  @Transactional
-    public boolean register(AppUser user) {
-        // todo: handle exceptions
-        boolean isValidEmail = emailValidator(user.getEmail());
-        try {
-<<<<<<< HEAD
-            if (!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())) {
-=======
-            if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail()) && isValidEmail){
->>>>>>> remotes/origin/developer
-                user.setPassword(encoder.encode(user.getPassword()));
-                userRepo.save(user);
-                return true;
-
-            }
-
-
-        } catch (Exception e) {
-
-        }
-
-        return false;
-    }*/
 
 
     public AppUser getLoggedInUser() {
@@ -197,7 +174,7 @@ public class UserService implements UserDetailsService {
                 confService.saveConfirmationToken(confToken);
 
                String link ="http://localhost:8080/confirm?token=" + token;
-           //     emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
+               emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
                 return true;
 
             }
