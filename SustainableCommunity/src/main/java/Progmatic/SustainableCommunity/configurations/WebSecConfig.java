@@ -35,7 +35,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                //.antMatchers("/**").permitAll()
+                //.antMatchers("/**").permitAll()     // ezt mindeképp ki kell majd venni
                 .antMatchers("/user/create").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
