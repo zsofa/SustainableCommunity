@@ -1,6 +1,7 @@
 package Progmatic.SustainableCommunity.services;
 
 //import Progmatic.SustainableCommunity.email.EmailBuilder;
+import Progmatic.SustainableCommunity.email.EmailBuilder;
 import Progmatic.SustainableCommunity.email.EmailSender;
 import Progmatic.SustainableCommunity.exceptions.EmailNotFoundException;
 import Progmatic.SustainableCommunity.jpaRepos.UserRepo;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -43,15 +45,16 @@ public class UserService implements UserDetailsService {
 
     private final ConfirmationTokenService confService;
 
+    @Autowired
     private PasswordEncoder encoder;
 
-    //private EmailSender emailSender;
-    //private EmailBuilder builder;
+    private EmailSender emailSender;
+    private EmailBuilder builder;
 
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
         return em.createQuery("SELECT user FROM AppUser user WHERE user.username = :name", AppUser.class) // kell a model
                 .setParameter("name", username)
                 .getSingleResult();
@@ -63,7 +66,24 @@ public class UserService implements UserDetailsService {
 
     }
 
+    @Transactional
+    public AppUser loginUser(String username, String password) {
 
+        AppUser user;
+        try {
+            user = loadUserByUsername(username);
+        } catch(NoResultException ex) {
+            return null;
+        }
+
+
+
+        if (encoder.matches(password,user.getPassword())) {
+            return user;
+        }
+
+        return null;
+    }
 
 
     @Transactional
@@ -109,30 +129,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-  /*  @Transactional
-    public boolean register(AppUser user) {
-        // todo: handle exceptions
-        boolean isValidEmail = emailValidator(user.getEmail());
-        try {
-<<<<<<< HEAD
-            if (!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())) {
-=======
-            if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail()) && isValidEmail){
->>>>>>> remotes/origin/developer
-                user.setPassword(encoder.encode(user.getPassword()));
-                userRepo.save(user);
-                return true;
-
-            }
-
-
-        } catch (Exception e) {
-
-        }
-
-        return false;
-    }*/
-
 
     public AppUser getLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -160,10 +156,27 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Item> getItemRatingList(Long id) {
-        return em.createQuery("SELECT item FROM Item item WHERE item.owner =:id", Item.class)
-                .getResultList();
+
+    @Transactional
+    public boolean register(AppUser user) {
+        try {
+            if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())){
+                user.setPassword(encoder.encode(user.getPassword()));
+                userRepo.save(user);
+                return true;
+
+            }
+
+
+        } catch (Exception e) {
+
+        }
+
+        return false;
     }
+
+
+   /*
     @Transactional
     public boolean register(RegistrationRequest user) {
         // todo: handle exceptions
@@ -180,11 +193,11 @@ public class UserService implements UserDetailsService {
                 appUser.setPassword(encoder.encode(user.getPassword()));
                 userRepo.save(appUser);
 
-                /** *
+                *//** *
                  * miután regisztrált a felhasználó, létrejön egy confirm token
                  * kiküldéstől számítva 15 perc áll rendelkezésre a megerősítésre
                  * elmentjük az adatbázisba, összekapcsolva az appuserrel
-                 */
+                 *//*
 
                 String token = UUID.randomUUID().toString();
                 ConfirmationToken confToken = new ConfirmationToken(
@@ -197,7 +210,7 @@ public class UserService implements UserDetailsService {
                 confService.saveConfirmationToken(confToken);
 
                String link ="http://localhost:8080/confirm?token=" + token;
-           //     emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
+               emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
                 return true;
 
             }
@@ -210,18 +223,32 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-
+*/
 
     public int enableAppUser(String email) {
         return userRepo.enableAppUser(email);
     }
 
+    public List<Item> getItemRatingList(Long id) {
+        return em.createQuery("SELECT item FROM Item item WHERE item.owner.userId =:id", Item.class)
+                .setParameter("id",id)
+                .getResultList();
+    }
 
-    public Double getUserRating(List<Item> itemsByUserId) {
-        Double userRating = null;
+
+       public Double getUserRating(Long userId) {
+
+        List<Item> itemsByUserId = getItemRatingList(userId);
+        Double userRating = 0.0;
+        double counter = 0.0;
+
         for (Item item : itemsByUserId) {
-            userRating += item.getItemRating();
+            if(item.getItemRating() != 0.0) {
+                counter++;
+                userRating += item.getItemRating();
+            }
         }
-        return userRating;
+        return (userRating/counter);
+
     }
 }
