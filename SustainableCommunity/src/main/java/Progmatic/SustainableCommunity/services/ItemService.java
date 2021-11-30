@@ -1,6 +1,6 @@
 package Progmatic.SustainableCommunity.services;
 
-import Progmatic.SustainableCommunity.forms.ItemForm;
+import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
 import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void uploadItem(ItemForm item) { // bemeneti par ItemFrom *
+    public void uploadItem(ItemDTO item) { // bemeneti par ItemFrom *
         Item saveItem = new Item(item);
         itemRepo.save(saveItem);
     }
