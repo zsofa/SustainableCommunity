@@ -1,4 +1,4 @@
-package Progmatic.SustainableCommunity.forms;
+package Progmatic.SustainableCommunity.DTOs;
 
 import Progmatic.SustainableCommunity.models.Item;
 import Progmatic.SustainableCommunity.models.ItemCategory;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ItemForm {
+public class ItemDTO {
 
     private String itemName;
     private ItemCategory itemCategory;
@@ -20,18 +20,18 @@ public class ItemForm {
     private Double itemWidth;
     private byte[] itemImage;
 
-    public ItemForm() {
+    public ItemDTO() {
     }
 
-    public ItemForm(String itemName,
-                    ItemCategory itemCategory,
-                    ItemCondition itemCondition,
-                    Integer itemValue,
-                    Integer borrowPrice,
-                    String description,
-                    Double itemHeight,
-                    Double itemWidth,
-                    byte[] itemImage) {
+    public ItemDTO(String itemName,
+                   ItemCategory itemCategory,
+                   ItemCondition itemCondition,
+                   Integer itemValue,
+                   Integer borrowPrice,
+                   String description,
+                   Double itemHeight,
+                   Double itemWidth,
+                   byte[] itemImage) {
         this.itemName = itemName;
         this.itemCategory = itemCategory;
         this.itemCondition = itemCondition;
@@ -43,7 +43,7 @@ public class ItemForm {
         this.itemImage = itemImage;
     }
 
-    public ItemForm(Item item){
+    public ItemDTO(Item item){
         this(item.getItemName(),
                 item.getItemCategory(),
                 item.getItemCondition(),
