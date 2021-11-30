@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -44,6 +45,7 @@ public class UserService implements UserDetailsService {
 
     private final ConfirmationTokenService confService;
 
+    @Autowired
     private PasswordEncoder encoder;
 
     private EmailSender emailSender;
@@ -52,7 +54,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
         return em.createQuery("SELECT user FROM AppUser user WHERE user.username = :name", AppUser.class) // kell a model
                 .setParameter("name", username)
                 .getSingleResult();
@@ -64,7 +66,24 @@ public class UserService implements UserDetailsService {
 
     }
 
+    @Transactional
+    public AppUser loginUser(String username, String password) {
 
+        AppUser user;
+        try {
+            user = loadUserByUsername(username);
+        } catch(NoResultException ex) {
+            return null;
+        }
+
+
+
+        if (encoder.matches(password,user.getPassword())) {
+            return user;
+        }
+
+        return null;
+    }
 
 
     @Transactional
@@ -137,10 +156,27 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Item> getItemRatingList(Long id) {
-        return em.createQuery("SELECT item FROM Item item WHERE item.owner =:id", Item.class)
-                .getResultList();
+
+    @Transactional
+    public boolean register(AppUser user) {
+        try {
+            if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())){
+                user.setPassword(encoder.encode(user.getPassword()));
+                userRepo.save(user);
+                return true;
+
+            }
+
+
+        } catch (Exception e) {
+
+        }
+
+        return false;
     }
+
+
+   /*
     @Transactional
     public boolean register(RegistrationRequest user) {
         // todo: handle exceptions
@@ -157,11 +193,11 @@ public class UserService implements UserDetailsService {
                 appUser.setPassword(encoder.encode(user.getPassword()));
                 userRepo.save(appUser);
 
-                /** *
+                *//** *
                  * miután regisztrált a felhasználó, létrejön egy confirm token
                  * kiküldéstől számítva 15 perc áll rendelkezésre a megerősítésre
                  * elmentjük az adatbázisba, összekapcsolva az appuserrel
-                 */
+                 *//*
 
                 String token = UUID.randomUUID().toString();
                 ConfirmationToken confToken = new ConfirmationToken(
@@ -187,10 +223,16 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-
+*/
 
     public int enableAppUser(String email) {
         return userRepo.enableAppUser(email);
+    }
+
+    public List<Item> getItemRatingList(Long id) {
+        return em.createQuery("SELECT item FROM Item item WHERE item.owner.userId =:id", Item.class)
+                .setParameter("id",id)
+                .getResultList();
     }
 
 
@@ -203,5 +245,6 @@ public class UserService implements UserDetailsService {
         }
         userRating = sum / itemsByUserId.toArray().length;
         return userRating;
+
     }
 }

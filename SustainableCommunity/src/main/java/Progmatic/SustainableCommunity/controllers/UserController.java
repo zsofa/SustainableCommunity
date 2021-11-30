@@ -1,6 +1,7 @@
 package Progmatic.SustainableCommunity.controllers;
 
 import Progmatic.SustainableCommunity.models.AppUser;
+import Progmatic.SustainableCommunity.models.UserRole;
 import Progmatic.SustainableCommunity.registration.RegistrationRequest;
 import Progmatic.SustainableCommunity.services.UserService;
 import io.jsonwebtoken.Jwts;
@@ -15,9 +16,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Date;
 import java.util.List;
@@ -30,8 +33,10 @@ public class UserController {
 
     UserService userService;
 
+    //LoginResultDTO loginResultDTO;
 
- /*   @PostMapping(path = "user/create",
+
+   @PostMapping(path = "user/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AppUser> create(@RequestBody final AppUser newRegUser) {
@@ -42,8 +47,8 @@ public class UserController {
         }
         return new ResponseEntity<>(newRegUser,HttpStatus.BAD_REQUEST);
 
-    }*/
-
+    }
+/*
     @PostMapping(path = "user/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,7 +61,7 @@ public class UserController {
         return new ResponseEntity<>(newRegUser,HttpStatus.BAD_REQUEST);
 
     }
-
+*/
 
     @GetMapping("user/isUsernameUnique")
     public boolean isUsernameUnique(String name) {
@@ -69,24 +74,46 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<AppUser> getAllUsers() {
-       // SecurityContext securityContext= SecurityContextHolder.getContext();
-       AppUser asd=  userService.getLoggedInUser();
-        return userService.getAll();
+    public ResponseEntity<List<AppUser>> getAllUsers() {
+        AppUser currentUser=  userService.getLoggedInUser();
+        if (currentUser.getUserRole() != UserRole.ADMIN)
+            return new ResponseEntity<>((List<AppUser>)null, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+    public ResponseEntity<String> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
 //TODO auth. before
+        AppUser user = userService.loginUser(username, pwd);
 
+        if (user == null)
+            return new ResponseEntity<>((String)null, HttpStatus.UNAUTHORIZED);
 
-        String token = getJWTToken(username, 1);// 1 helylre userid TODO
-        return token;
+        String token = getJWTToken(username, user.getUserId());// 1 helylre userid TODO
+        return new ResponseEntity<>("\""+token+"\"", HttpStatus.OK);
 
     }
 
+/*    @PostMapping("/login")
+    public ResponseEntity<LoginResultDTO> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+//TODO auth. before
+        AppUser user = userService.loginUser(username, pwd);
+
+        if (user == null)
+            return new ResponseEntity<>((LoginResultDTO)null, HttpStatus.UNAUTHORIZED);
+
+        String token = getJWTToken(username, 1);// 1 helylre userid TODO
+
+        LoginResultDTO result = new LoginResultDTO();
+        result.token = token;
+        result.user = user;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }*/
+
     private String getJWTToken(String username, long userID) {
-        String secretKey = "mySecretKey";
+        String secretKey = "wGvcqQzJyidy";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList("ROLE_USER");
 
