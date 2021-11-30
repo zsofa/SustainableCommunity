@@ -8,10 +8,8 @@ import { UserApiService } from './UserApi.service';
 })
 export class UserService {
 
-  public users:User[] = [
-    {id:100,email:"uu@t",username:"T1",password:"t1",passAgain:"t1",userRole: UserRole.CUSTOMER},
-    {id:101,email:"uu@ts",username:"A1",password:"a1",passAgain:"a1",userRole: UserRole.ADMIN}
-  ] // this.userApiService.getUsers();
+  public users:User[] = [];
+  
 
 constructor(
   public router: Router,
@@ -25,25 +23,44 @@ public currentUser: User = null;
   }
 
 
-  login(name: string, pass: string) {
-    
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].username === name && this.users[i].password === pass) {
-        this.currentUser = this.users[i];
-        console.log(this.currentUser);
-        this.router.navigateByUrl("/home");
-        return;
+  login(name: string, pass: string, rememberMe: boolean) {
+
+    this.userApiService.login(name, pass).subscribe(result => {
+
+      if (rememberMe) {
+        sessionStorage.removeItem("jwtToken");
+        localStorage.setItem("jwtToken", result.token);
+      } else {
+        localStorage.removeItem("jwtToken");
+        sessionStorage.setItem("jwtToken", result.token);
       }
 
-    }
-    this.currentUser = new User();
-   alert($localize `Wrong username or password`);
-    return;
+      this.currentUser = result.user;
+
+      this.router.navigateByUrl("/home");
+    }, () => {
+      alert("Invalid username or password");
+    });
+
+
+    // for (let i = 0; i < this.users.length; i++) {
+    //   if (this.users[i].username === name && this.users[i].password === pass) {
+    //     this.currentUser = this.users[i];
+    //     console.log(this.currentUser);
+    //     this.router.navigateByUrl("/home");
+    //     return;
+    //   }
+    // }
+    //  // this.currentUser = new User();
+    //  alert($localize `Wrong username or password`);
+    //   return;
 
   }
 
   logOut() {
     this.currentUser = null;
+    sessionStorage.removeItem("jwtToken");
+    localStorage.removeItem("jwtToken");
     this.router.navigateByUrl("/login");
     console.log(this.currentUser);
 
@@ -51,7 +68,8 @@ public currentUser: User = null;
   }
 
   public hasLoggedInUser(): boolean {
-    return !!this.currentUser;  
+    return !!sessionStorage.getItem("jwtToken") || !!localStorage.getItem("jwtToken");  
+    //return !!this.currentUser;  
   }
 
 
