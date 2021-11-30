@@ -194,11 +194,14 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public Double getUserRating(List<Item> itemsByUserId) {
+    public Double getUserRating(Long userId) {
+        List<Item> itemsByUserId = getItemRatingList(userId);
+        Double sum = null;
         Double userRating = null;
         for (Item item : itemsByUserId) {
-            userRating += item.getItemRating();
+            sum += item.getItemRating();
         }
+        userRating = sum / itemsByUserId.toArray().length;
         return userRating;
     }
 }
