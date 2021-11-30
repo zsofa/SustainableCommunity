@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @EqualsAndHashCode
 @Getter
 @ToString
-public class RegistrationRequest {
+public class RegistrationUser {
 
     private final String username;
     private final String email;
