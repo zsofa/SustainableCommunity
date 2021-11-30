@@ -133,4 +133,25 @@ public class UserController {
         return token;
     }
 
+    @DeleteMapping("user/delete/{id}")
+    public ResponseEntity<AppUser> deleteSelfUserAccount(@PathVariable Long id) {
+        return new ResponseEntity<>(new AppUser(), HttpStatus.OK);
+    }
+
+
+    @PutMapping("user/edit/{id}")
+    public ResponseEntity<AppUser> editSelfUserAccount(@PathVariable Long id) {
+        return new ResponseEntity<>(new AppUser(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("admin/delete/{id}")
+    public ResponseEntity<AppUser> deleteAnyAccount(@PathVariable Long id) {
+        return new ResponseEntity<>(new AppUser(), HttpStatus.OK);
+    }
+
+    @PutMapping("admin/edit/{id}")
+    public ResponseEntity<AppUser> editAnyAccount(@PathVariable Long id) {
+        return new ResponseEntity<>(new AppUser(), HttpStatus.OK);
+    }
+
 }

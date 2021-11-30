@@ -2,11 +2,13 @@ package Progmatic.SustainableCommunity.services;
 
 import Progmatic.SustainableCommunity.forms.ItemForm;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
+import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +23,9 @@ public class ItemService {
     }
 
     @Transactional
-    public void uploadItem(ItemForm item) { // bemeneti par ItemFrom *
+    public void uploadItem(ItemForm item, AppUser appUser) { // bemeneti par ItemFrom *
         Item saveItem = new Item(item);
+        appUser.getUploadItems().add(saveItem);
         itemRepo.save(saveItem);
     }
 
@@ -79,6 +82,21 @@ public class ItemService {
         item.setRateCounter(item.getRateCounter()+1);
         item.setItemRating(item.getRatings()/item.getRateCounter());
         return item.getItemRating();
+    }
+
+    public Item reserveItem(Item item) {
+        item.setIsAvailable(false);
+        return item;
+    }
+
+    public AppUser addToRentedItemList(Item item, AppUser appUser) {
+        appUser.getRentedItems().add(item);
+        return appUser;
+    }
+
+    public AppUser deleteRentedItemList(Item item, AppUser appUser) {
+        appUser.getRentedItems().remove(item);
+        return appUser;
     }
 }
 
