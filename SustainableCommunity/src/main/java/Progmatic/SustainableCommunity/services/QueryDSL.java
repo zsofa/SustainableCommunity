@@ -33,17 +33,20 @@ public class QueryDSL {
         if(!queryForm.getItemCondition().isBlank()) {
             booleanBuilder.and(item.itemCondition.eq(ItemCondition.valueOf(queryForm.getItemCondition())));
         }
-        if(queryForm.getItemValueGreaterThan() != 0) {
+        if(queryForm.getItemValueGreaterThan() != null) {
             booleanBuilder.and(item.itemValue.goe(queryForm.getItemValueGreaterThan()));
         }
-        if(queryForm.getItemValueLesserThan() != 0) {
+        if(queryForm.getItemValueLesserThan() != null) {
             booleanBuilder.and(item.itemValue.loe(queryForm.getItemValueLesserThan()));
         }
-        if(queryForm.getBorrowPriceGreaterThan() != 0) {
+        if(queryForm.getBorrowPriceGreaterThan() != null) {
             booleanBuilder.and(item.borrowPrice.goe(queryForm.getBorrowPriceGreaterThan()));
         }
-        if(queryForm.getBorrowPriceLesserThan() != 0) {
+        if(queryForm.getBorrowPriceLesserThan() != null) {
             booleanBuilder.and(item.borrowPrice.loe(queryForm.getBorrowPriceLesserThan()));
+        }
+        if(queryForm.isAvailable()) {
+            booleanBuilder.and(item.isAvailable.eq(true));
         }
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);

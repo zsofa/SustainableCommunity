@@ -20,4 +20,6 @@ public class QueryForm {
 
     private boolean itemValueAsc;
     private boolean borrowPriceAsc;
+
+    private boolean isAvailable;
 }
