@@ -129,30 +129,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-  /*  @Transactional
-    public boolean register(AppUser user) {
-        // todo: handle exceptions
-        boolean isValidEmail = emailValidator(user.getEmail());
-        try {
-<<<<<<< HEAD
-            if (!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail())) {
-=======
-            if(!isUsernameUsed(user.getUsername()) && !isEmailUsed(user.getEmail()) && isValidEmail){
->>>>>>> remotes/origin/developer
-                user.setPassword(encoder.encode(user.getPassword()));
-                userRepo.save(user);
-                return true;
-
-            }
-
-
-        } catch (Exception e) {
-
-        }
-
-        return false;
-    }*/
-
 
     public AppUser getLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -180,10 +156,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Item> getItemRatingList(Long id) {
-        return em.createQuery("SELECT item FROM Item item WHERE item.owner =:id", Item.class)
-                .getResultList();
-    }
 
     @Transactional
     public boolean register(AppUser user) {
@@ -238,7 +210,7 @@ public class UserService implements UserDetailsService {
                 confService.saveConfirmationToken(confToken);
 
                String link ="http://localhost:8080/confirm?token=" + token;
-           //     emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
+               emailSender.send(user.getEmail(), builder.buildEmail(user.getUsername(), link));
                 return true;
 
             }
@@ -257,12 +229,26 @@ public class UserService implements UserDetailsService {
         return userRepo.enableAppUser(email);
     }
 
+    public List<Item> getItemRatingList(Long id) {
+        return em.createQuery("SELECT item FROM Item item WHERE item.owner.userId =:id", Item.class)
+                .setParameter("id",id)
+                .getResultList();
+    }
 
-    public Double getUserRating(List<Item> itemsByUserId) {
-        Double userRating = null;
+
+       public Double getUserRating(Long userId) {
+
+        List<Item> itemsByUserId = getItemRatingList(userId);
+        Double userRating = 0.0;
+        double counter = 0.0;
+
         for (Item item : itemsByUserId) {
-            userRating += item.getItemRating();
+            if(item.getItemRating() != 0.0) {
+                counter++;
+                userRating += item.getItemRating();
+            }
         }
-        return userRating;
+        return (userRating/counter);
+
     }
 }

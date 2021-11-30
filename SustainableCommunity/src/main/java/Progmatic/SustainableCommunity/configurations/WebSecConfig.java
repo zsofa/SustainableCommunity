@@ -21,11 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 @Configuration
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
-/*
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/     // ez kell itt ha van egy külön class?
+
 
     @Bean
     public JWTAuthorizationFilter jwtAuthenticationFilter() {
