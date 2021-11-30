@@ -8,7 +8,13 @@
       </li>
     </ul>
   </div>
-  <button [routerLink] = "['/item-registration']">Upload</button>
-  <button [routerLink] = "['/item-review']" *ngIf="isUserAdmin()">Review</button>
-  </div>
+  <nav *ngIf="userService.loggedin">
+  <button class="upload-button" [routerLink] = "['/item-registration']">Upload</button>
+  <!-- <button [routerLink] = "['/item-review']" *ngIf="isUserAdmin()">Review</button> -->
+</nav> 
+</div>
+<div>Item1</div>
+<div>Item2</div>
+<div>Item3</div>
+
   
