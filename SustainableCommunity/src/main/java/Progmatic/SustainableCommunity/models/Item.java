@@ -1,6 +1,6 @@
 package Progmatic.SustainableCommunity.models;
 
-import Progmatic.SustainableCommunity.forms.ItemForm;
+import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -84,16 +84,16 @@ public class Item {
         this.borrowPrice = borrowPrice;
     }
 
-    public Item(ItemForm itemForm){
-        this(itemForm.getItemName(),
-                itemForm.getItemCategory(),
-                itemForm.getItemCondition(),
-                itemForm.getItemValue(),
-                itemForm.getBorrowPrice(),
-                itemForm.getDescription(),
-                itemForm.getItemHeight(),
-                itemForm.getItemWidth(),
-                itemForm.getItemImage());
+    public Item(ItemDTO itemDTO){
+        this(itemDTO.getItemName(),
+                itemDTO.getItemCategory(),
+                itemDTO.getItemCondition(),
+                itemDTO.getItemValue(),
+                itemDTO.getBorrowPrice(),
+                itemDTO.getDescription(),
+                itemDTO.getItemHeight(),
+                itemDTO.getItemWidth(),
+                itemDTO.getItemImage());
     }
 
     public Item(String itemName,

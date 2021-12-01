@@ -3,7 +3,11 @@
 <div *ngFor="let item of itemService.approveList">
   <ul>
     <li>
-      <div><a [routerLink] ="['/item-details', item.itemId]">{{item.itemName}}</a></div>
+      <div><a [routerLink] ="['/item-details', item.itemId]">{{item.itemName}}</a>
+      <button>delete</button>
+      <button>modify</button>
+      <button>accept</button>
+      </div>
       <div><a [routerLink] ="['/item-details', item.itemId]">{{item.itemId}}</a></div>
       <!-- <span>
         Price: {{orderService.sumPrice()}}

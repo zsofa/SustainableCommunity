@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Condition,Category, Item } from 'src/app/models/Item';
 import { ItemService } from 'src/app/services/Item.service';
 import { ItemApiService } from 'src/app/services/ItemApi.service';
@@ -15,7 +16,8 @@ export class ItemRegistrationComponent implements OnInit {
   constructor(
     public itemService: ItemService,
     public itemApiService: ItemApiService,
-    public userService : UserService
+    public userService : UserService,
+    public router: Router
   ) { }
 
   public item: Item = new Item();
@@ -34,7 +36,10 @@ export class ItemRegistrationComponent implements OnInit {
       console.log(value);
       //alert("Success"); // ez csak tesztelésre, majd szedd ki
     });
+    this.router.navigate(['/home'])
   }
+
+  /*
     //ez itt jelenleg nem müxik
     //  ezzel próbálkoztam html oldalon  [defaultItem]="defaultItem"
   public defaultItem:{
@@ -43,7 +48,7 @@ export class ItemRegistrationComponent implements OnInit {
 
   //  placeholder = "Select..."
 
-  };
+  };*/
 
 public itemSendToReview(){
   if(confirm("Upload request forward to the checkpoint?")){

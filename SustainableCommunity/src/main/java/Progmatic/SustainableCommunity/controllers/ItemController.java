@@ -1,7 +1,6 @@
 package Progmatic.SustainableCommunity.controllers;
 
-import Progmatic.SustainableCommunity.forms.ItemForm;
-import Progmatic.SustainableCommunity.models.Item;
+import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import Progmatic.SustainableCommunity.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ public class ItemController {
     @PostMapping(path = "item/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ItemForm> create(@RequestBody final ItemForm newItem) {
+    public ResponseEntity<ItemDTO> create(@RequestBody final ItemDTO newItem) {
             itemService.uploadItem(newItem);
             return new ResponseEntity<>(newItem, HttpStatus.CREATED);
 
