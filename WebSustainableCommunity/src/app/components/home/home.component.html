@@ -9,5 +9,6 @@
     </ul>
   </div>
   <button [routerLink] = "['/item-registration']">Upload</button>
+  <button [routerLink] = "['/item-review']" *ngIf="isUserAdmin()">Review</button>
   </div>
   

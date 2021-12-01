@@ -1,3 +1,4 @@
+
 package Progmatic.SustainableCommunity.email;
 
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 
 @Service
 @AllArgsConstructor
@@ -36,3 +38,4 @@ public class EmailService implements EmailSender{
         }
     }
 }
+

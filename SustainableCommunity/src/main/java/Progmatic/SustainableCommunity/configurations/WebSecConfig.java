@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -21,26 +22,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService appUserService;
-    private final PasswordEncoder passwordEncoder;
 
-    UserService userService;
+    @Bean
+    public JWTAuthorizationFilter jwtAuthenticationFilter() {
+        return new JWTAuthorizationFilter();
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .formLogin()
-                .and()
-                .logout()
-                .and()
+                .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
-                .antMatchers("/**").permitAll()
-                .antMatchers("user/create").permitAll()
-                // a homepage-n és regen kívül minden oldalhoz autentikáció kell jelenleg
-                .anyRequest()
-                .authenticated();
+                //.antMatchers("/**").permitAll()     // ezt mindeképp ki kell majd venni
+                .antMatchers("/user/create").permitAll()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated();
+
+
+
         
 /*
                 .antMatchers(
@@ -63,7 +64,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
 
     }
-   @Override
+ /*  @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
@@ -75,6 +76,6 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(passwordEncoder);
         provider.setUserDetailsService(appUserService);
         return provider;
-    }
+    }*/
 
 }

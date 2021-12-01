@@ -47,6 +47,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
+    
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -72,6 +73,7 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+    
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -100,12 +102,17 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>4.2.2</version>
 		</dependency>
+    
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-core</artifactId>
 			<version>4.4.0</version>
 		</dependency>
 
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 
 	</dependencies>
 
