@@ -2,6 +2,7 @@ package Progmatic.SustainableCommunity.services;
 
 import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
+import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +80,22 @@ public class ItemService {
         item.setRateCounter(item.getRateCounter()+1);
         item.setItemRating(item.getRatings()/item.getRateCounter());
         return item.getItemRating();
+    }
+
+    public Item reserveItem(Item item) {
+        item.setIsAvailable(false);
+        return item;
+    }
+
+    public AppUser addToRentedItemList(Item item, AppUser appUser) {
+        appUser.getRentedItems().add(item);
+        return appUser;
+    }
+
+    public Item enableItem(Item item) {
+        item.setIsAvailable(true);
+        itemRepo.save(item);
+        return item;
     }
 }
 
