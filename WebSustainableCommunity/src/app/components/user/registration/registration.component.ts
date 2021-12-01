@@ -15,7 +15,6 @@ import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import { UserService } from 'src/app/services/User.service';
 import { UserApiService } from 'src/app/services/UserApi.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -29,7 +28,6 @@ export class RegistrationComponent implements OnInit {
     public userService: UserService,
     public userApiService: UserApiService,
     changeDetector: ChangeDetectorRef,
-    public router: Router
 
   ) { }
 
@@ -70,7 +68,6 @@ export class RegistrationComponent implements OnInit {
       console.log(value);
       alert("Success"); // ez csak tesztelésre, majd szedd ki
     });
-  this.router.navigate(['/login'])
   }
 
 

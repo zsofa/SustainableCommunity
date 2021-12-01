@@ -37,7 +37,6 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.antMatchers("/**").permitAll()     // ezt mindeképp ki kell majd venni
                 .antMatchers("/user/create").permitAll()
-                .antMatchers("/user/isUsernameUnique").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
 
