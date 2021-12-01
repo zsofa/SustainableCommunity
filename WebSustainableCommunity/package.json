@@ -1,9 +1,9 @@
 {
   "name": "web-sustainable-community",
-  "version": "0.0.0"
+  "version": "0.0.0",
   "engines": {
     "node": "14.18.1"
-  },
+  }
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
