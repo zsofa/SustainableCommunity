@@ -94,9 +94,10 @@ public class ItemService {
         return appUser;
     }
 
-    public AppUser deleteRentedItemList(Item item, AppUser appUser) {
-        appUser.getRentedItems().remove(item);
-        return appUser;
+    public Item enableItem(Item item) {
+        item.setIsAvailable(true);
+        itemRepo.save(item);
+        return item;
     }
 }
 

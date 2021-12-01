@@ -40,8 +40,8 @@ public class ItemController {
     }
 
     @PostMapping("item/return")
-    public ResponseEntity<Item> returnItem(@RequestBody Item item, AppUser appUser) {
-        itemService.deleteRentedItemList(item, appUser);
+    public ResponseEntity<Item> returnItem(@RequestBody Item item) {
+        itemService.enableItem(item);
         return new ResponseEntity<>(item, HttpStatus.ACCEPTED);
     }
 
