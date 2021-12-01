@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,14 +31,21 @@ public class AppUser implements UserDetails {
     private LocalDateTime regTime;
     private String firstName;
     private String lastName;
+    private Double userRating;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @OneToMany(mappedBy="owner")
-    private List<Item> uploadItems;
-    @OneToMany(mappedBy="charterer")
-    private List<Item> rentedItems;
+    @OneToMany(mappedBy="owner",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Item> uploadItems = new ArrayList<>();
+    @OneToMany(mappedBy="charterer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Item> rentedItems = new ArrayList<>();
 
+    private boolean enabled = false;
+    private boolean locked = false;
     public AppUser() {
 
     this.userRole = UserRole.CUSTOMER;
@@ -89,7 +97,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -99,6 +107,6 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

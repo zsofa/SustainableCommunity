@@ -1,18 +1,22 @@
 package Progmatic.SustainableCommunity.controllers;
 
+import Progmatic.SustainableCommunity.DTOs.LoginResultDTO;
 import Progmatic.SustainableCommunity.models.AppUser;
+import Progmatic.SustainableCommunity.models.UserRole;
 import Progmatic.SustainableCommunity.services.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -22,7 +26,9 @@ public class UserController {
     UserService userService;
 
 
-    @PostMapping(path = "user/create",
+
+
+   @PostMapping(path = "user/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AppUser> create(@RequestBody final AppUser newRegUser) {
@@ -34,7 +40,20 @@ public class UserController {
         return new ResponseEntity<>(newRegUser,HttpStatus.BAD_REQUEST);
 
     }
+/*
+    @PostMapping(path = "user/create",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RegistrationRequest> create(@RequestBody final RegistrationRequest newRegUser) {
 
+        boolean success= userService.register(newRegUser);
+        if(success){
+            return new ResponseEntity<>(newRegUser, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(newRegUser,HttpStatus.BAD_REQUEST);
+
+    }
+*/
 
     @GetMapping("user/isUsernameUnique")
     public boolean isUsernameUnique(String name) {
@@ -47,9 +66,51 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<AppUser> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity<List<AppUser>> getAllUsers() {
+        AppUser currentUser=  userService.getLoggedInUser();
+        if (currentUser.getUserRole() != UserRole.ADMIN)
+            return new ResponseEntity<>((List<AppUser>)null, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResultDTO> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+        AppUser user = userService.loginUser(username, pwd);
+
+        if (user == null)
+            return new ResponseEntity<>((LoginResultDTO)null, HttpStatus.UNAUTHORIZED);
+
+        String token = getJWTToken(username, user.getUserId());
+
+        LoginResultDTO result = new LoginResultDTO();
+        result.setToken(token);
+        result.setUser(user);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
+
+
+    private String getJWTToken(String username, long userID) {
+        String secretKey = "wGvcqQzJyidy";
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_USER");
+
+        String token = Jwts
+                .builder()
+                .setId("" + userID)
+                .setSubject(username)
+                .claim("authorities",
+                        grantedAuthorities.stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .signWith(SignatureAlgorithm.HS512,
+                        secretKey.getBytes()).compact();
+
+        return token;
+    }
 
 }

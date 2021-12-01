@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../models/User';
+import { User, UserRole } from '../models/User';
+import { UserApiService } from './UserApi.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  public users: User[] = [];
+  public users:User[] = [];
+  
 
 constructor(
-  public router: Router
+  public router: Router,
+  public userApiService: UserApiService
 ) { }
 
 
@@ -20,7 +23,26 @@ public currentUser: User = null;
   }
 
 
-  login(name: string, pass: string) {
+  login(name: string, pass: string, rememberMe: boolean) {
+
+    this.userApiService.login(name, pass).subscribe(result => {
+
+      if (rememberMe) {
+        sessionStorage.removeItem("jwtToken");
+        localStorage.setItem("jwtToken", result.token);
+      } else {
+        localStorage.removeItem("jwtToken");
+        sessionStorage.setItem("jwtToken", result.token);
+      }
+
+      this.currentUser = result.user;
+
+      this.router.navigateByUrl("/home");
+    }, () => {
+      alert("Invalid username or password");
+    });
+
+
     // for (let i = 0; i < this.users.length; i++) {
     //   if (this.users[i].username === name && this.users[i].password === pass) {
     //     this.currentUser = this.users[i];
@@ -28,16 +50,17 @@ public currentUser: User = null;
     //     this.router.navigateByUrl("/home");
     //     return;
     //   }
-
     // }
-    this.currentUser = new User();
-   // alert($localize `Wrong username or password`);
-    //return;
+    //  // this.currentUser = new User();
+    //  alert($localize `Wrong username or password`);
+    //   return;
 
   }
 
   logOut() {
     this.currentUser = null;
+    sessionStorage.removeItem("jwtToken");
+    localStorage.removeItem("jwtToken");
     this.router.navigateByUrl("/login");
     console.log(this.currentUser);
 
@@ -45,7 +68,8 @@ public currentUser: User = null;
   }
 
   public hasLoggedInUser(): boolean {
-    return !!this.currentUser;  
+    return !!sessionStorage.getItem("jwtToken") || !!localStorage.getItem("jwtToken");  
+    //return !!this.currentUser;  
   }
 
 
@@ -101,7 +125,7 @@ public currentUser: User = null;
        let userId:number = maxId + 1;
 
 
-      this.users.push( {id: userId, email:email, username: entryName, password: pass, passAgain:passAgain});
+      this.users.push( {id: userId, email:email, username: entryName, password: pass, passAgain:passAgain,userRole:null});
 
 
       alert($localize `Successful registration!`)
@@ -112,14 +136,25 @@ public currentUser: User = null;
 
   }
 
-  changeUser(user: User) {
-    for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].id === user.id) {
-            this.users[i] = user;
-            console.log(user)
-        }
+  public isUserAdmin(): boolean {
+    if (this.currentUser.userRole === UserRole.ADMIN) {
+      return true;
     }
-}
+    return false;
+  }
+
+
+
+//   changeUser(user: User) {
+//     for (let i = 0; i < this.users.length; i++) {
+//         if (this.users[i].id === user.id) {
+//             this.users[i] = user;
+//             console.log(user)
+//         }
+//     }
+// }
+
+
 
 
 }

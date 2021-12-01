@@ -41,8 +41,8 @@ public form: FormGroup = new FormGroup({
 
 public login(): void {
   this.form.markAllAsTouched();
-  this.userService.login(this.username,this.password);
-  this.router.navigateByUrl("/home")
+  this.userService.login(this.username, this.password, this.loggedin);
+ // this.router.navigateByUrl("/home")
   //  alert($localize `This must be translated`);   ez kell a typscripten belüli fordításhoz a ' $localize  '!!!
 }
 

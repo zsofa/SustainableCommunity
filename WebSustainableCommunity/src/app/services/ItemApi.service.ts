@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpContext} from "@angular/common/http";
 import {Item} from "../models/Item";
 import {Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
+import { IS_TOKEN_ENABLED } from './auth.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ constructor(
 ) { }
 
 public register(newItem: Item): Observable<Item> {
-  return this.http.post<Item>(environment.serverBaseHref + "/item/create", newItem)
+  return this.http.post<Item>(environment.serverBaseHref + "/item/create", newItem);
 }
 
 

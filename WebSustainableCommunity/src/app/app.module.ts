@@ -18,7 +18,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { LayoutModule } from '@progress/kendo-angular-layout';
- import {HttpClientModule} from "@angular/common/http";
+ import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
  import {CustomAsyncValidatorDirective} from "./directives/custom-async-validator.directive";
  import {CustomValidatorDirective} from "./directives/custom-validator.directive";
 import { HomeComponent } from './components/home/home.component';
@@ -26,6 +26,8 @@ import { ItemDetailsComponent } from './components/item/item-details/item-detail
 import { ItemRegistrationComponent } from './components/item/item-registration/item-registration.component';
 import { EnumDropdownDirective } from './directives/enum-dropdown.directive';
 import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.component';
+import { ItemReviewComponent } from './components/admin/item-review/item-review.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.c
     ItemRegistrationComponent,
     EnumDropdownDirective,
     EnumLabelComponent,
+    ItemReviewComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,13 @@ import { EnumLabelComponent } from './components/helpers/enum-label/enum-label.c
 
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
