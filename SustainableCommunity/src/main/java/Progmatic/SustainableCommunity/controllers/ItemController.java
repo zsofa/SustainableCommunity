@@ -5,6 +5,8 @@ import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import Progmatic.SustainableCommunity.models.ItemCategory;
 import Progmatic.SustainableCommunity.services.ItemService;
+import Progmatic.SustainableCommunity.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,15 +14,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 public class ItemController {
-    @Autowired
+
     ItemService itemService;
+    UserService userService;
 
     @PostMapping(path = "item/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ItemDTO> create(@RequestBody final ItemDTO newItem) {
-            itemService.uploadItem(newItem);
+        AppUser owner = userService.getLoggedInUser();
+            itemService.uploadItem(newItem, owner);
             return new ResponseEntity<>(newItem, HttpStatus.CREATED);
 
 
