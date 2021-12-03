@@ -34,12 +34,15 @@ class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("user/create"))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
-
-
+    
     @Test
     @WithMockUser(roles = "ADMIN")
     void getAllUsers() throws Exception {
         mockMvc.perform(get("/users"))
                 .andExpect(status().isOk());
     }
+
+
+
+
 }
