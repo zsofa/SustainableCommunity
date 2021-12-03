@@ -3,6 +3,7 @@ package Progmatic.SustainableCommunity.services;
 
 import Progmatic.SustainableCommunity.models.ItemCategory;
 import Progmatic.SustainableCommunity.models.ItemCondition;
+//import Progmatic.SustainableCommunity.models.QItem;
 import Progmatic.SustainableCommunity.models.QItem;
 import Progmatic.SustainableCommunity.models.QueryForm;
 import com.querydsl.core.BooleanBuilder;
@@ -21,7 +22,7 @@ public class QueryDSL {
     @Transactional
     public void filterAndSortQueryDSL(QueryForm queryForm) {
 
-        QItem item = QItem.item;
+         QItem item = QItem.item;
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         if(!queryForm.getItemName().isBlank()) {
@@ -53,9 +54,12 @@ public class QueryDSL {
         queryFactory.selectFrom(item)
                 .where(booleanBuilder)
                 .orderBy(queryForm.isItemValueAsc() ?
-                            item.itemValue.asc() : item.itemValue.desc())
+                        item.itemValue.asc() : item.itemValue.desc())
                 .orderBy(queryForm.isBorrowPriceAsc() ?
-                            item.borrowPrice.asc() : item.borrowPrice.desc());
+                        item.borrowPrice.asc() : item.borrowPrice.desc());
     }
 
-}
+    }
+
+
+

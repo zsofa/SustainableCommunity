@@ -1,6 +1,6 @@
 package Progmatic.SustainableCommunity.services;
 
-import Progmatic.SustainableCommunity.forms.ItemForm;
+import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
 import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void uploadItem(ItemForm item, AppUser appUser) { // bemeneti par ItemFrom *
+    public void uploadItem(ItemDTO item, AppUser appUser) { // bemeneti par ItemFrom *
         Item saveItem = new Item(item);
         appUser.getUploadItems().add(saveItem);
         itemRepo.save(saveItem);

@@ -23,3 +23,4 @@ public class QueryForm {
 
     private boolean isAvailable;
 }
+
