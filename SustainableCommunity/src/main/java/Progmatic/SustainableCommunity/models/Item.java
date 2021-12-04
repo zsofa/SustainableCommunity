@@ -48,6 +48,7 @@ public class Item {
     private Integer rateCounter = 0;
     private Double ratings;
     private Double itemRating;
+    private Double wasteSavedFromLandfill;
 
     public Item() {
     }
@@ -113,6 +114,7 @@ public class Item {
         this.description = description;
         this.itemHeight = itemHeight;
         this.itemWidth = itemWidth;
+        this.itemImage = itemImage;
 
     }
 }
