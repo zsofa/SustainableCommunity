@@ -1,6 +1,7 @@
 package Progmatic.SustainableCommunity.models;
 
 import Progmatic.SustainableCommunity.DTOs.ItemDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,14 +42,21 @@ public class Item {
     private ItemStatus itemStatus;
     @CreationTimestamp
     private LocalDateTime upload;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     private AppUser owner;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private AppUser charterer;
     private Integer rateCounter = 0;
     private Double ratings;
     private Double itemRating;
     private Double wasteSavedFromLandfill;
+
+    @Transient
+    private Integer moneySaved;
+    @Transient
+    private Double spaceSaved;
 
     public Item() {
     }
@@ -71,6 +79,32 @@ public class Item {
         this.owner = owner;
     }
     */
+
+    public Item(String itemName, ItemCategory itemCategory, ItemCondition itemCondition, Integer itemValue,
+                Integer borrowPrice, String description, Double itemHeight, Double itemWidth,
+                byte[] itemImage, Boolean isAvailable, Boolean isApproved, ItemStatus itemStatus,
+                AppUser owner, AppUser charterer, Integer rateCounter, Double ratings, Double itemRating,
+                Double wasteSavedFromLandfill) {
+        this.itemName = itemName;
+        this.itemCategory = itemCategory;
+        this.itemCondition = itemCondition;
+        this.itemValue = itemValue;
+        this.borrowPrice = borrowPrice;
+        this.description = description;
+        this.itemHeight = itemHeight;
+        this.itemWidth = itemWidth;
+        this.itemImage = itemImage;
+        this.isAvailable = isAvailable;
+        this.isApproved = isApproved;
+        this.itemStatus = itemStatus;
+        this.owner = owner;
+        this.charterer = charterer;
+        this.rateCounter = rateCounter;
+        this.ratings = ratings;
+        this.itemRating = itemRating;
+        this.wasteSavedFromLandfill = wasteSavedFromLandfill;
+    }
+
 
 
     public Item(String itemName,
@@ -116,5 +150,13 @@ public class Item {
         this.itemWidth = itemWidth;
         this.itemImage = itemImage;
 
+    }
+
+    public Integer getMoneySaved() {
+        return itemValue - borrowPrice;
+    }
+
+    public Double getSpaceSaved() {
+        return itemHeight * itemWidth /100;
     }
 }

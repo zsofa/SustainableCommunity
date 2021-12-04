@@ -83,7 +83,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
-//TODO auth. before
+    //TODO auth. before
         AppUser user = userService.loginUser(username, pwd);
 
         if (user == null)

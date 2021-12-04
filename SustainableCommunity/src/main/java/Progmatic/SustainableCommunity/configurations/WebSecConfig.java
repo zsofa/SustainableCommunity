@@ -22,24 +22,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
+/*
 
     @Bean
     public JWTAuthorizationFilter jwtAuthenticationFilter() {
         return new JWTAuthorizationFilter();
     }
+*/
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll();
+        /*http
                 .csrf().disable()
                 .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 //.antMatchers("/**").permitAll()     // ezt mindeképp ki kell majd venni
+                .antMatchers("/itemImg/{itemId}/upload").permitAll()
                 .antMatchers("/user/create").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
-
+*/
 
 
         
