@@ -1,4 +1,4 @@
-package Progmatic.SustainableCommunity.DTOs;
+package Progmatic.SustainableCommunity.dataloader;
 
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
 import Progmatic.SustainableCommunity.models.Item;
