@@ -4,21 +4,28 @@ import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import Progmatic.SustainableCommunity.jpaRepos.ItemRepo;
 import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
+import Progmatic.SustainableCommunity.storage.BucketName;
+import Progmatic.SustainableCommunity.storage.FileStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
+
+import static org.apache.http.entity.ContentType.*;
 
 @Service
 public class ItemService {
     
     private ItemRepo itemRepo;
+    private final FileStore fileStore;
 
     @Autowired
-    public ItemService(ItemRepo itemRepo) {
+    public ItemService(ItemRepo itemRepo, FileStore fileStore) {
         this.itemRepo = itemRepo;
+        this.fileStore = fileStore;
     }
 
     @Transactional
@@ -26,6 +33,59 @@ public class ItemService {
         Item saveItem = new Item(item);
         appUser.getUploadItems().add(saveItem);
         itemRepo.save(saveItem);
+    }
+
+    public void uploadItemWImage(ItemDTO item, AppUser user, MultipartFile file) {
+        Item saveItem = new Item(item);
+        itemRepo.save(saveItem);
+        // 1. check if image is not empty
+        boolean imgIsEmpty = file.isEmpty();
+        if(imgIsEmpty) {
+            throw new IllegalStateException("file is empty");
+        }
+        // 2. If file is an image
+        if(!Arrays.asList(IMAGE_JPEG.getMimeType(), IMAGE_PNG.getMimeType(), IMAGE_GIF.getMimeType()).contains(file.getContentType())){
+            throw new IllegalStateException("file is not an image");
+        }
+
+        // 4. Grab some metadata if any
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("Content-Type", file.getContentType());
+        metadata.put("Content-Length", String.valueOf(file.getSize()));
+        // 5. store the image in s3 and update database (userProfileImageLink) with s3 image link
+        String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBUCKET_NAME(),saveItem.getItemId());
+
+        String filename = String.format("%s-%s", file.getOriginalFilename(), UUID.randomUUID());
+        try {
+            fileStore.save(path,filename, Optional.of(metadata),file.getInputStream());
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+
+
+        user.getUploadItems().add(saveItem);
+
+        saveItem.setImgLink(filename);
+
+        try {
+            saveItem.setItemImage(file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        itemRepo.save(saveItem);
+
+    }
+
+
+    public byte[] downloadItemImgAWS(Long itemId) {
+
+        Item item = itemRepo.getById(itemId);
+        String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBUCKET_NAME(),item.getItemId());
+
+        return item.getImgLink()
+                .map(key -> fileStore.download(path,key))
+                .orElse(new byte[0]);
     }
 
     /**
@@ -98,5 +158,6 @@ public class ItemService {
         itemRepo.save(item);
         return item;
     }
+
 }
 

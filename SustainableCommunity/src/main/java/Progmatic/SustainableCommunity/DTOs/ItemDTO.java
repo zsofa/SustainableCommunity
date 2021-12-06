@@ -44,6 +44,10 @@ public class ItemDTO {
         this.itemImage = itemImage;
     }
 
+    public ItemDTO(String itemName) {
+        this.itemName = itemName;
+    }
+
     public ItemDTO(Item item){
         this(item.getItemName(),
                 item.getItemCategory(),

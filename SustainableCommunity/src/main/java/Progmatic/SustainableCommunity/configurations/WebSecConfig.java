@@ -31,19 +31,24 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 */
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+
+                .antMatchers("/**").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin();
         /*http
                 .csrf().disable()
                 .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 //.antMatchers("/**").permitAll()     // ezt mindeképp ki kell majd venni
-                .antMatchers("/itemImg/{itemId}/upload").permitAll()
                 .antMatchers("/user/create").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
@@ -72,7 +77,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
 
     }
- /*  @Override
+/*   @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
     }

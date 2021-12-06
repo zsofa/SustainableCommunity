@@ -34,7 +34,7 @@ public class DataLoaderController {
     @GetMapping(path = "itemImg/download/{itemId}",
                 produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE}
     )
-    public byte[] downloadUserProfileImage(@PathVariable("itemId") Long itemId) {
+    public byte[] downloadItemImageFromDB(@PathVariable("itemId") Long itemId) {
         Item item = itemRepo.getById(itemId);
 
         return item.getItemImage();

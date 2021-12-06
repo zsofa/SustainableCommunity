@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Getter
@@ -120,17 +121,22 @@ public class Item {
         this.borrowPrice = borrowPrice;
     }
 
-    public Item(ItemDTO itemDTO){
-        this(itemDTO.getItemName(),
-                itemDTO.getItemCategory(),
-                itemDTO.getItemCondition(),
-                itemDTO.getItemValue(),
-                itemDTO.getBorrowPrice(),
-                itemDTO.getDescription(),
-                itemDTO.getItemHeight(),
-                itemDTO.getItemWidth(),
-                itemDTO.getItemImage());
+    public Item(String itemName) {
+        this.itemName = itemName;
     }
+
+    public Item(ItemDTO itemDTO){
+        this(itemDTO.getItemName());
+    }
+ /*   ,
+            itemDTO.getItemCategory(),
+            itemDTO.getItemCondition(),
+            itemDTO.getItemValue(),
+            itemDTO.getBorrowPrice(),
+            itemDTO.getDescription(),
+            itemDTO.getItemHeight(),
+            itemDTO.getItemWidth(),
+            itemDTO.getItemImage()*/
 
     public Item(String itemName,
                 ItemCategory itemCategory,
@@ -176,6 +182,9 @@ public class Item {
 
     }
 
+    public Optional<String> getImgLink() {
+        return Optional.ofNullable(imgLink);
+    }
     public Integer getMoneySaved() {
         return itemValue - borrowPrice;
     }

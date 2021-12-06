@@ -4,6 +4,7 @@ import Progmatic.SustainableCommunity.DTOs.ItemDTO;
 import Progmatic.SustainableCommunity.models.AppUser;
 import Progmatic.SustainableCommunity.models.Item;
 import Progmatic.SustainableCommunity.models.ItemCategory;
+import Progmatic.SustainableCommunity.models.UserRole;
 import Progmatic.SustainableCommunity.services.ItemService;
 import Progmatic.SustainableCommunity.services.UserService;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @AllArgsConstructor
@@ -30,6 +32,26 @@ public class ItemController {
 
 
     }
+
+    @PostMapping(path = "item/create/img",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ItemDTO> createWImg(@RequestBody final ItemDTO newItem,
+                                              @RequestParam("image") MultipartFile file) {
+        AppUser owner =// new AppUser("user12", "user12@gmail.com", "password", UserRole.CUSTOMER);
+                userService.getLoggedInUser();
+        //ItemDTO newItem = new ItemDTO("testItem");
+        itemService.uploadItemWImage(newItem, owner,file);
+        return new ResponseEntity<>(newItem, HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "itemImg/download/aws/{itemId}",
+            produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE}
+    )
+    public byte[] downloadItemImageFromAWS(@PathVariable("itemId") Long itemId) {
+        return itemService.downloadItemImgAWS(itemId);
+    }
+
 
     @GetMapping("item/{ItemCategory}/{id}")
     public ResponseEntity<Item> getOneItem(@PathVariable ItemCategory itemCategory, Long id) {
