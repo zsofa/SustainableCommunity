@@ -19,6 +19,7 @@ public class ItemDTO {
     private Double itemHeight;
     private Double itemWidth;
     private byte[] itemImage;
+    private String imgLink;
 
     public ItemDTO() {
     }

@@ -36,6 +36,7 @@ public class Item {
     private Double itemWidth;
     @Lob
     private byte[] itemImage;
+    private String imgLink;
     private Boolean isAvailable;
     private Boolean isApproved;
     @Enumerated(EnumType.STRING)
@@ -149,6 +150,29 @@ public class Item {
         this.itemHeight = itemHeight;
         this.itemWidth = itemWidth;
         this.itemImage = itemImage;
+
+    }
+
+    public Item(String itemName,
+                ItemCategory itemCategory,
+                ItemCondition itemCondition,
+                Integer itemValue,
+                Integer borrowPrice,
+                String description,
+                Double itemHeight,
+                Double itemWidth,
+                byte[] itemImage,
+                String imgLink) {
+        this.itemName = itemName;
+        this.itemCategory = itemCategory;
+        this.itemCondition = itemCondition;
+        this.itemValue = itemValue;
+        this.borrowPrice = borrowPrice;
+        this.description = description;
+        this.itemHeight = itemHeight;
+        this.itemWidth = itemWidth;
+        this.itemImage = itemImage;
+        this.imgLink = imgLink;
 
     }
 
