@@ -1,0 +1,117 @@
+
+<div class="example">
+  <form class="k-form" #form (ngSubmit)= "onSubmit()" >
+    <fieldset class="k-form-fieldset">
+      <legend class="k-form-legend" i18n>Item Details</legend>
+
+      <kendo-formfield>
+        <kendo-label [for]="ItemName" text="Item name" i18n-text></kendo-label>
+        <kendo-textbox
+        [(ngModel)]="item.itemName" name="Item name"
+          #ItemName="ngModel"
+          required
+        ></kendo-textbox>
+
+        <kendo-formerror *ngIf="ItemName.errors?.required" i18n>
+          Error: Item name is required
+        </kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="dropDownCategory" text="Category" i18n-text></kendo-label>
+      
+        <kendo-dropdownlist
+      [enumDropdown]="Category"
+      [(ngModel)]="item.itemCategory"
+      name="Category"
+      #dropDownCategory
+      required
+    >
+    </kendo-dropdownlist>
+    <kendo-formerror *ngIf="Description.errors?.required" i18n>
+      Error: Category is required
+    </kendo-formerror>
+
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="dropDownCondition" text="Condition" i18n-text></kendo-label>
+      
+        <kendo-dropdownlist
+      [enumDropdown]="Condition"
+      [(ngModel)]="item.itemCondition"
+      name="Condition"
+      #dropDownCondition
+      required
+    >
+    </kendo-dropdownlist>
+    <kendo-formerror *ngIf="Description.errors?.required" i18n>
+      Error: Condition is required
+    </kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="itemHeight" text="Height" i18n-text></kendo-label>
+        <kendo-numerictextbox
+        [(ngModel)]="item.itemHeight" name="Height"
+          #itemHeight="ngModel"
+          placeholder="value in cm" i18n-text
+          required
+          [format]="format"
+          
+      
+      
+        >
+        
+      </kendo-numerictextbox>
+        <kendo-formerror *ngIf="Description.errors?.required" i18n>
+          Error: Height is missing
+        </kendo-formerror>
+
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <kendo-label [for]="itemWidth" text="Width" i18n-text></kendo-label>
+        <kendo-numerictextbox
+        [(ngModel)]="item.itemWidth" name="Width"
+          #itemWidth="ngModel"
+          placeholder="value in cm" i18n-text
+          [format]="format"
+          required
+
+        >
+        
+      </kendo-numerictextbox>
+        <kendo-formerror *ngIf="Description.errors?.required" i18n>
+          Error: Width is missing
+        </kendo-formerror>
+
+      </kendo-formfield>
+<!--class = "description-textbox"-->
+      <kendo-formfield>
+        <kendo-label [for]="Description" text="Description" i18n-text></kendo-label>
+        <kendo-textbox
+        
+        [(ngModel)]="item.description" name="description"
+          #Description="ngModel"
+          required
+
+        >
+        
+      </kendo-textbox>
+        <kendo-formerror *ngIf="Description.errors?.required" i18n>
+          Error: Description is missing
+        </kendo-formerror>
+
+      </kendo-formfield>
+
+      <div class="k-form-buttons">
+        <button class="k-button k-primary" type="submit" i18n>
+          Submit
+        </button>
+       <!-- <button class="k-button" (click)="clearForm()">Clear</button>-->
+       <button [routerLink] = "['/home']" type="button" i18n>back</button>
+      </div>
+    </fieldset>
+  </form>
+</div>

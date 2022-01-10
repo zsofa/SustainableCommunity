@@ -1719,6 +1719,7 @@
       </trans-unit>
       <trans-unit id="2454050363478003966" datatype="html">
         <source>Login</source>
+	<target>Bejelentkezés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/user/login/login.component.html</context>
           <context context-type="linenumber">1</context>
@@ -1726,6 +1727,7 @@
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
         <source>Username</source>
+	<target>Felhasználónév</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/user/login/login.component.html</context>
           <context context-type="linenumber">7</context>
@@ -1733,6 +1735,7 @@
       </trans-unit>
       <trans-unit id="1431416938026210429" datatype="html">
         <source>Password</source>
+	<target>Jelszó</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/user/login/login.component.html</context>
           <context context-type="linenumber">19</context>
@@ -1740,6 +1743,7 @@
       </trans-unit>
       <trans-unit id="5717693400037853909" datatype="html">
         <source>Error: Password is required</source>
+	<target>Jelszó szükséges</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/user/login/login.component.html</context>
           <context context-type="linenumber">37</context>
@@ -1747,6 +1751,7 @@
       </trans-unit>
       <trans-unit id="8732609422646995822" datatype="html">
         <source>Keep me logged in</source>
+	<target>Maradjak bejelentkezve</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/user/login/login.component.html</context>
           <context context-type="linenumber">52</context>
@@ -1762,6 +1767,7 @@
       </trans-unit>
       <trans-unit id="8298333184054476827" datatype="html">
         <source>Registration</source>
+	<target>Regisztráció</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/user/login/login.component.html</context>
           <context context-type="linenumber">62</context>

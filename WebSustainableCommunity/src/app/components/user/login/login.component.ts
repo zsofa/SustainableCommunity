@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TextBoxComponent } from '@progress/kendo-angular-inputs';
 import { UserService } from 'src/app/services/User.service';
 
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public userService: UserService,
+    public router: Router,
   ) { }
 
 
@@ -39,6 +41,8 @@ public form: FormGroup = new FormGroup({
 
 public login(): void {
   this.form.markAllAsTouched();
+  this.userService.login(this.username,this.password);
+ // this.router.navigateByUrl("/home")
   //  alert($localize `This must be translated`);   ez kell a typscripten belüli fordításhoz a ' $localize  '!!!
 }
 

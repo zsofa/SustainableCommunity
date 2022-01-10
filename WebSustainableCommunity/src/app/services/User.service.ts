@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../models/User';
+import { User, UserRole } from '../models/User';
+import { UserApiService } from './UserApi.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  public users: User[] = [];
+  public users:User[] = [
+    {id:100,email:"uu@t",username:"T1",password:"t1",passAgain:"t1",userRole: UserRole.CUSTOMER},
+    {id:101,email:"uu@ts",username:"A1",password:"a1",passAgain:"a1",userRole: UserRole.ADMIN}
+  ] // this.userApiService.getUsers();
 
 constructor(
-  public router: Router
+  public router: Router,
+  public userApiService: UserApiService
 ) { }
 
 
@@ -21,16 +26,18 @@ public currentUser: User = null;
 
 
   login(name: string, pass: string) {
+    
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].username === name && this.users[i].password === pass) {
         this.currentUser = this.users[i];
         console.log(this.currentUser);
-        this.router.navigateByUrl("/productList");
+        this.router.navigateByUrl("/home");
         return;
       }
 
     }
-    alert($localize `Wrong username or password`);
+    this.currentUser = new User();
+   alert($localize `Wrong username or password`);
     return;
 
   }
@@ -49,7 +56,7 @@ public currentUser: User = null;
 
 
 
-  getUserNameById(userid: number): string {   // getUserById volt az eredeti neve
+  getUserNameById(userid: number): string {   
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].id === userid) {
         return this.users[i].username;
@@ -72,7 +79,7 @@ public currentUser: User = null;
   UsedNameChecker(name: string) {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].username === name) {
-        alert("This name is allready in use")
+        alert($localize `This name is allready in use`)
         return false;
       }
     }
@@ -82,7 +89,7 @@ public currentUser: User = null;
   samePassword(pass1: string,pass2: string) {
     for (let i = 0; i < this.users.length; i++) {
       if (pass1 !== pass2) {
-        alert("The passwords are not the same")
+        alert($localize `The passwords are not the same`)
         return false;
       }
     }
@@ -100,7 +107,7 @@ public currentUser: User = null;
        let userId:number = maxId + 1;
 
 
-      this.users.push( {id: userId, email:email, username: entryName, password: pass, passAgain:passAgain});
+      this.users.push( {id: userId, email:email, username: entryName, password: pass, passAgain:passAgain,userRole:null});
 
 
       alert($localize `Successful registration!`)
@@ -111,14 +118,25 @@ public currentUser: User = null;
 
   }
 
-  changeUser(user: User) {
-    for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].id === user.id) {
-            this.users[i] = user;
-            console.log(user)
-        }
+  public isUserAdmin(): boolean {
+    if (this.currentUser.userRole === UserRole.ADMIN) {
+      return true;
     }
-}
+    return false;
+  }
+
+
+
+//   changeUser(user: User) {
+//     for (let i = 0; i < this.users.length; i++) {
+//         if (this.users[i].id === user.id) {
+//             this.users[i] = user;
+//             console.log(user)
+//         }
+//     }
+// }
+
+
 
 
 }

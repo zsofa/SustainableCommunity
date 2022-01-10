@@ -1,0 +1,14 @@
+<div class="product-img">
+
+  
+  <div *ngFor="let item of itemService.items">
+    <ul>
+      <li>
+        <a [routerLink] = "['/item-details', item.itemId]">{{item.itemName}}</a>
+      </li>
+    </ul>
+  </div>
+  <button [routerLink] = "['/item-registration']">Upload</button>
+  <button [routerLink] = "['/item-review']" *ngIf="isUserAdmin()">Review</button>
+  </div>
+  
